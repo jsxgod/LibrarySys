@@ -2,9 +2,6 @@ package Storage;
 
 import Controllers.SceneController;
 
-/**
- * @author katjon
- */
 public class ControllerStorage implements Storage<SceneController> {
 //    private Map<String, SceneController>
     private static ControllerStorage instance = new ControllerStorage();
