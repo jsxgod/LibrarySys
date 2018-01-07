@@ -8,6 +8,8 @@ import java.util.concurrent.ConcurrentMap;
 
 /**
  * Implementation of {@link Storage} interface for {@link Scene} class
+ * It also uses the singleton pattern hence the private constructor
+ *
  */
 @SuppressWarnings("unchecked")
 public class SceneStorage implements Storage<Scene>, Watchable<Scene> {

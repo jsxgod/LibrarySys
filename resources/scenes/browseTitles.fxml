@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.collections.FXCollections?>
+<?import TableRows.TitleRow?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="Controllers.BrowseTitlesController"
+          prefHeight="400.0" prefWidth="520.0">
+
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+
+    <HBox spacing="10" GridPane.rowIndex="0" GridPane.columnIndex="0">
+        <Label text="Title" prefWidth="138"/>
+        <Label text="Author" prefWidth="135"/>
+        <Label text="ISBN" prefWidth="135"/>
+
+    </HBox>
+
+    <HBox spacing="10" GridPane.rowIndex="1" GridPane.columnIndex="0">
+        <TextField prefWidth="165" />
+        <TextField prefWidth="165" />
+        <TextField prefWidth="150"/>
+
+        <Button fx:id="searchButton" prefWidth="100" text="Search" onAction="#handleSearch" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+    </HBox>
+
+    <TableView fx:id="tableView" prefWidth="500" GridPane.rowIndex="2" GridPane.columnIndex="0">
+
+        <columns>
+            <TableColumn fx:id="authorColumn" text="Author" prefWidth="170">
+                <cellValueFactory>
+                    <PropertyValueFactory property="author"/>
+                </cellValueFactory>
+            </TableColumn>
+
+            <TableColumn fx:id="titleColumn" text="Title" prefWidth="170">
+                <cellValueFactory>
+                    <PropertyValueFactory property="title"/>
+                </cellValueFactory>
+            </TableColumn>
+
+            <TableColumn fx:id="isbnColumn" text="ISBN" prefWidth="150">
+                <cellValueFactory>
+                    <PropertyValueFactory property="ISBN"/>
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <TitleRow  author="Michail Bulhakow" title="Mistrz i Malgorzta" ISBN="1234567890123"/>
+            </FXCollections>
+        </items>
+        <sortOrder>
+            <fx:reference source="authorColumn"/>
+        </sortOrder>
+    </TableView>
+
+    <HBox alignment="BOTTOM_CENTER" spacing="10" GridPane.rowIndex="3" GridPane.columnIndex="0">
+        <Button onAction="#handleGetCopies" prefWidth="300" text="See copies of selected Title"/>
+        <Button onAction="#handleBack" prefWidth="50" text="Back"/>
+    </HBox>
+</GridPane>

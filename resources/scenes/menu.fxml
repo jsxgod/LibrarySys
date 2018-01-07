@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<GridPane prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MenuController">
+
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+
+    <VBox spacing="10" alignment="TOP_CENTER" translateX="125">
+        <Label style="-fx-font: NORMAL 20 Tahoma;" text="Menu"/>
+        <Button text="Search Titles" onAction="#handleSearchTitles"/>
+        <Button text="Browse Readers" onAction="#handleBrowseReaders"/>
+        <Button text="Borrow a Book" onAction="#handleBorrow"/>
+        <Button text="Return a Book" onAction="#handleReturn"/>
+        <Button text="Add Title" onAction="#handleAddTitle"/>
+        <Button text="Add Reader" onAction="#handleAddReader"/>
+        <Button text="Log Out" onAction="#handleLogOut"/>
+    </VBox>
+</GridPane>
