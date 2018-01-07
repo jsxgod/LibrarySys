@@ -57,8 +57,10 @@ public class BrowseReadersController implements SceneController{
 
     public void handleSelect(ActionEvent actionEvent) {
         ReaderRow selectedReader = tableView.getSelectionModel().getSelectedItem();
-        ( (ReaderInfoController) controllerStorage.get("readerInfo") ).getParams(selectedReader.getPesel(),selectedReader.getName(),selectedReader.getSurname());
-        window.setScene(sceneStorage.get("readerInfo"));
+        if(selectedReader != null){
+            ( (ReaderInfoController) controllerStorage.get("readerInfo") ).getParams(selectedReader.getPesel(),selectedReader.getName(),selectedReader.getSurname());
+            window.setScene(sceneStorage.get("readerInfo"));
+        }
     }
 
     public void handleBack(ActionEvent actionEvent) {
