@@ -9,13 +9,14 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class ReaderInfoController implements SceneController{
 
-    public ListView<String> readerInfoList;
+    public ListView<Object> readerInfoList;
 
     private Stage window;
     private ParameterStorage parameterStorage;
@@ -24,8 +25,10 @@ public class ReaderInfoController implements SceneController{
     private String pesel;
     private String name;
     private String surname;
+    private String email;
+    private Date birthday;
 
-    private List<String> readerInfoArray = new ArrayList<String>();
+    private List<Object> readerInfoArray = new ArrayList<>();
 
     @Override
     public void setupController(Stage window) {
@@ -40,10 +43,12 @@ public class ReaderInfoController implements SceneController{
 
     }
 
-    public void getParams(String pesel, String name, String surname){
+    public void getParams(String pesel, String name, String surname, String email, Date birthday){
         this.pesel = pesel;
         this.name = name;
         this.surname = surname;
+        this.email = email;
+        this.birthday = birthday;
 
         /*
         TODO
@@ -53,8 +58,10 @@ public class ReaderInfoController implements SceneController{
         readerInfoArray.add(this.pesel);
         readerInfoArray.add(this.name);
         readerInfoArray.add(this.surname);
+        readerInfoArray.add(this.email);
+        readerInfoArray.add(this.birthday);
 
-        ObservableList<String> observableArrayList = FXCollections.observableArrayList(readerInfoArray);
+        ObservableList<Object> observableArrayList = FXCollections.observableArrayList(readerInfoArray);
 
         this.readerInfoList.setItems(observableArrayList);
     }

@@ -2,7 +2,7 @@ package Controllers;
 
 import Storage.ParameterStorage;
 import Storage.SceneStorage;
-import TableRows.TitleRow;
+import Model.Title;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -21,7 +21,7 @@ public class BrowseTitlesController implements SceneController{
 
 
     @FXML
-    private TableView<TitleRow> tableView;
+    private TableView<Title> tableView;
 
     @FXML
     private TableColumn authorColumn;
@@ -58,7 +58,7 @@ public class BrowseTitlesController implements SceneController{
     }
 
     public void handleGetCopies(ActionEvent actionEvent) {
-        TitleRow titleRow = tableView.getSelectionModel().getSelectedItem();
-        System.out.println(titleRow.getAuthor());
+        Title title = tableView.getSelectionModel().getSelectedItem();
+        System.out.println(title.getAuthor());
     }
 }

@@ -1,18 +1,18 @@
-package TableRows;
+package Model;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public class TitleRow {
+public class Title {
 
     private final SimpleStringProperty author = new SimpleStringProperty("-");
     private final SimpleStringProperty title = new SimpleStringProperty("-");
     private final SimpleStringProperty ISBN = new SimpleStringProperty("0");
 
-    public TitleRow(){
+    public Title(){
         this("-","-", "0");
     }
 
-    public TitleRow(String author, String title, String ISBN) {
+    public Title(String author, String title, String ISBN) {
         setAuthor(author);
         setTitle(title);
         setISBN(ISBN);

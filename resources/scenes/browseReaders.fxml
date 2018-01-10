@@ -6,64 +6,41 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.collections.FXCollections?>
-<?import TableRows.ReaderRow?>
+<?import Model.Reader?>
 
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="Controllers.BrowseReadersController"
-          prefHeight="400.0" prefWidth="520.0">
+          prefHeight="400.0" prefWidth="810.0">
 
     <padding>
         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
     </padding>
 
     <HBox spacing="10" GridPane.rowIndex="0" GridPane.columnIndex="0">
-        <Label text="Pesel" prefWidth="138"/>
-        <Label text="Name" prefWidth="135"/>
-        <Label text="Surname" prefWidth="135"/>
-    </HBox>
-
-    <HBox spacing="10" GridPane.rowIndex="1" GridPane.columnIndex="0">
-        <TextField prefWidth="165" />
-        <TextField prefWidth="165" />
-        <TextField prefWidth="150"/>
+        <TextField fx:id="peselTextField" promptText="PESEL" prefWidth="165" />
+        <TextField fx:id="nameTextField" promptText="Name" prefWidth="165" />
+        <TextField fx:id="surnameTextField" promptText="Surname" prefWidth="150"/>
 
         <Button fx:id="searchButton" prefWidth="100" text="Search" onAction="#handleSearch" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
     </HBox>
 
-    <TableView fx:id="tableView" prefWidth="500" GridPane.rowIndex="2" GridPane.columnIndex="0">
+    <TableView fx:id="tableView" prefWidth="790" GridPane.rowIndex="1" GridPane.columnIndex="0">
 
         <columns>
-            <TableColumn fx:id="peselColumn" text="PESEL" prefWidth="170">
-                <cellValueFactory>
-                    <PropertyValueFactory property="pesel"/>
-                </cellValueFactory>
-            </TableColumn>
-
-            <TableColumn fx:id="nameColumn" text="Name" prefWidth="170">
-                <cellValueFactory>
-                    <PropertyValueFactory property="name"/>
-                </cellValueFactory>
-            </TableColumn>
-
-            <TableColumn fx:id="surnameColumn" text="Surname" prefWidth="150">
-                <cellValueFactory>
-                    <PropertyValueFactory property="surname"/>
-                </cellValueFactory>
-            </TableColumn>
+            <TableColumn fx:id="peselColumn" text="PESEL" prefWidth="170"/>
+            <TableColumn fx:id="nameColumn" text="Name" prefWidth="170"/>
+            <TableColumn fx:id="surnameColumn" text="Surname" prefWidth="150"/>
+            <TableColumn fx:id="emailColumn" text="Email" prefWidth="150"/>
+            <TableColumn fx:id="birthdayColumn" text="Birthday" prefWidth="150"/>
         </columns>
-        <items>
-            <FXCollections fx:factory="observableArrayList">
-                <ReaderRow pesel="97080202318" name="Kacper" surname="Smyczyk"/>
-                <ReaderRow pesel="00000000000" name="Mikolaj" surname="Pietrek"/>
-            </FXCollections>
-        </items>
+
         <sortOrder>
             <fx:reference source="surnameColumn"/>
         </sortOrder>
     </TableView>
 
-    <HBox alignment="BOTTOM_CENTER" spacing="10" GridPane.rowIndex="3" GridPane.columnIndex="0">
+    <HBox alignment="BOTTOM_CENTER" spacing="10" GridPane.rowIndex="2" GridPane.columnIndex="0">
         <Button onAction="#handleSelect" prefWidth="100" text="SELECT"/>
         <Button onAction="#handleBack" prefWidth="50" text="Back"/>
     </HBox>

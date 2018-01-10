@@ -6,7 +6,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.collections.FXCollections?>
-<?import TableRows.TitleRow?>
+<?import Model.Title?>
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="Controllers.BrowseTitlesController"
@@ -54,7 +54,7 @@
         </columns>
         <items>
             <FXCollections fx:factory="observableArrayList">
-                <TitleRow  author="Michail Bulhakow" title="Mistrz i Malgorzta" ISBN="1234567890123"/>
+                <Title author="Michail Bulhakow" title="Mistrz i Malgorzta" ISBN="1234567890123"/>
             </FXCollections>
         </items>
         <sortOrder>
