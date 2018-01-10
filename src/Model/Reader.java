@@ -60,25 +60,15 @@ public class Reader {
 
     public Date getBirthday() { return birthday.get(); }
 
-    public SimpleStringProperty readerPeselProperty() {
-        return this.pesel;
-    }
+    public SimpleStringProperty readerPeselProperty() { return this.pesel; }
 
-    public SimpleStringProperty readerNameProperty() {
-        return this.name;
-    }
+    public SimpleStringProperty readerNameProperty() { return this.name; }
 
-    public SimpleStringProperty readerSurnameProperty() {
-        return this.surname;
-    }
+    public SimpleStringProperty readerSurnameProperty() { return this.surname; }
 
-    public SimpleStringProperty readerEmailProperty() {
-        return this.email;
-    }
+    public SimpleStringProperty readerEmailProperty() { return this.email; }
 
-    public SimpleObjectProperty<Date> readerBirthdayProperty() {
-        return this.birthday;
-    }
+    public SimpleObjectProperty<Date> readerBirthdayProperty() { return this.birthday; }
 }
 
 

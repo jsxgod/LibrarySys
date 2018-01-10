@@ -93,7 +93,7 @@ public class LibrarySystem extends Application {
         addTitleController.setupController(this.window);
         readerInfoController.setupController(this.window);
 
-        primaryStage.setScene(loginScene);
+        primaryStage.setScene(searchTitleScene);
         primaryStage.show();
     }
 }

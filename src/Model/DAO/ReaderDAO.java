@@ -4,18 +4,23 @@ import Model.Reader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import util.DBUtil;
+import util.ReaderStatementBuilder;
+import util.SQLStatementBuilder;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReaderDAO {
 
-    private static final String EMPTY_STRING = "";
+    private static SQLStatementBuilder builder = new ReaderStatementBuilder();
+
 
     //SELECT a Reader
     public static Reader searchReader(String pesel) throws SQLException, ClassNotFoundException {
 
-        String selectStatement = "SELECT * FROM readers WHERE pesel=" + pesel;
+        String selectStatement = builder.clear().select().withWhere("pesel",pesel).build();
 
         //Execute the statement
         try {
@@ -47,7 +52,7 @@ public class ReaderDAO {
     //SELECT All Readers
     public static ObservableList<Reader> searchAllReaders() throws SQLException, ClassNotFoundException {
 
-        String selectStatement = "SELECT * FROM readers";
+        String selectStatement = builder.clear().select().build();
 
         //Execute the statement
         try{
@@ -64,12 +69,7 @@ public class ReaderDAO {
     public static ObservableList<Reader> searchReaders(String name, String surname) throws SQLException, ClassNotFoundException {
         String selectStatement = null;
 
-        if(!name.equals(EMPTY_STRING)){
-            selectStatement = "SELECT * FROM readers WHERE name='"+name+"'";
-        }
-        if(!surname.equals(EMPTY_STRING)){
-            selectStatement += " AND surname='"+surname+"'";
-        }
+        selectStatement = builder.clear().select().withWhere("name", name).withWhere("surname", surname).build();
 
         //Execute the statement
         try{
@@ -130,11 +130,16 @@ public class ReaderDAO {
         TODO
         Change updateStatement to match DB transaction
          */
-        String updateStatement =
-                "BEGIN\n" +
-                        "INSERT INTO readers\n" +
-                        "VALUES('"+pesel+"', '"+name+"', '"+surname+"','"+email+"', '"+ "STR_TO_DATE('"+birthday+"', '%d-%m-%Y'));\n" +
-                        "END;";
+        String updateStatement = null;
+
+        List<String> values = new ArrayList<>();
+        values.add(pesel);
+        values.add(name);
+        values.add(surname);
+        values.add(email);
+        values.add(birthday);
+
+        updateStatement = builder.clear().insert("readers", values).build();
 
         //Execute update statement
         try {

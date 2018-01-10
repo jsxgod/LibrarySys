@@ -96,15 +96,15 @@ public class BrowseReadersController implements SceneController{
 
 
             if(peselTextField.getText().isEmpty() && nameTextField.getText().isEmpty() && surnameTextField.getText().isEmpty()){
-                this.readerObservableList.clear();
                 this.readerObservableList.addAll(ReaderDAO.searchAllReaders());
             }
 
-            else if(peselTextField.getText().isEmpty()){
+            else if(!peselTextField.getText().isEmpty()){
+                this.readerObservableList.addAll(ReaderDAO.searchReader(peselTextField.getText()));
+            }
+
+            else if(peselTextField.getText().isEmpty()) {
                 this.readerObservableList.addAll(ReaderDAO.searchReaders(nameTextField.getText(), surnameTextField.getText()));
-            } else {
-                Reader reader = ReaderDAO.searchReader(peselTextField.getText());
-                this.readerObservableList.add(reader);
             }
 
             tableView.setItems(readerObservableList);
