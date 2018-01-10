@@ -44,8 +44,10 @@ public class BorrowController implements SceneController{
         TODO
         Actually perform the borrow action if possible
          */
-        this.bookIDTextField.clear();
-        this.peselTextField.clear();
-        this.window.setScene(sceneStorage.get("menu"));
+        bookIDTextField.clear();
+        peselTextField.clear();
+        window.setScene(sceneStorage.get("menu"));
+        window.centerOnScreen();
+
     }
 }

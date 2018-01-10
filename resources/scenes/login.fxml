@@ -6,18 +6,17 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.PasswordField?>
-<GridPane prefHeight="400.0" prefWidth="370.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LoginController">
 
+<GridPane prefHeight="350.0" prefWidth="290.0" minWidth="290" maxWidth="290" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LoginController">
     <padding>
         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
     </padding>
 
     <VBox spacing="10">
-        <Label alignment="TOP_CENTER" style="-fx-font: NORMAL 20 Tahoma;" text="Welcome to the Library System" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <Label  alignment="TOP_CENTER" style="-fx-font: NORMAL 20 Tahoma;" text="Welcome to the Library System" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
         <TextField fx:id="loginInput" focusTraversable="false" promptText="login" GridPane.columnIndex="0" GridPane.rowIndex="1" />
         <PasswordField fx:id="passwordInput" focusTraversable="false" promptText="password" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-        <Button fx:id="loginButton" onAction="#handleLogin" prefWidth="100" text="Login" translateX="125.0" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+        <Button fx:id="loginButton" onAction="#handleLogin" prefWidth="100" text="Login" translateX="85.0" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
     </VBox>
 </GridPane>

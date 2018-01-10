@@ -29,29 +29,43 @@ public class MenuController implements SceneController {
 
     public void handleSearchTitles(ActionEvent actionEvent) {
         window.setScene(sceneStorage.get("browseTitles"));
+        window.setTitle("Title Browser");
+        window.centerOnScreen();
     }
 
     public void handleBorrow(ActionEvent actionEvent) {
         window.setScene(sceneStorage.get("borrow"));
+        window.setTitle("Borrow");
+        window.centerOnScreen();
     }
 
     public void handleReturn(ActionEvent actionEvent) {
         window.setScene(sceneStorage.get("return"));
+        window.setTitle("Return");
+        window.centerOnScreen();
     }
 
     public void handleAddTitle(ActionEvent actionEvent) {
         window.setScene(sceneStorage.get("addTitle"));
+        window.setTitle("Add Title");
+        window.centerOnScreen();
     }
 
     public void handleAddReader(ActionEvent actionEvent) {
         window.setScene(sceneStorage.get("addReader"));
+        window.setTitle("Add Reader");
+        window.centerOnScreen();
     }
 
     public void handleLogOut(ActionEvent actionEvent) {
         window.setScene(sceneStorage.get("login"));
+        window.setTitle("Login");
+        window.centerOnScreen();
     }
 
     public void handleBrowseReaders(ActionEvent actionEvent) {
         window.setScene(sceneStorage.get("browseReaders"));
+        window.setTitle("Reader Browser");
+        window.centerOnScreen();
     }
 }

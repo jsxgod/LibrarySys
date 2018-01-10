@@ -65,6 +65,7 @@ public class LoginController implements SceneController {
         Alert passwordAlert;
         if (passwordInput.getText().equals("123")) {
             window.setScene(sceneStorage.get("menu"));
+            window.centerOnScreen();
         }
         else {
             passwordAlert = new Alert(Alert.AlertType.ERROR);

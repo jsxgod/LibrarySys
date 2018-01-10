@@ -65,7 +65,6 @@ public class BrowseTitlesController implements SceneController{
     @Override
     public void setupController(Stage window) {
         this.window = window;
-        this.window.setTitle("Title Browser");
         this.parameterStorage = ParameterStorage.getInstance();
         this.sceneStorage = SceneStorage.getInstance();
     }
@@ -118,7 +117,9 @@ public class BrowseTitlesController implements SceneController{
     @FXML
     public void handleBack(ActionEvent actionEvent) {
         titleObservableList.clear();
-        this.window.setScene(sceneStorage.get("menu"));
+        window.setScene(sceneStorage.get("menu"));
+        window.setTitle("Menu");
+        window.centerOnScreen();
     }
 
     public void handleGetCopies(ActionEvent actionEvent) {

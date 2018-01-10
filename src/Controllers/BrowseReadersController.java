@@ -96,15 +96,15 @@ public class BrowseReadersController implements SceneController{
 
 
             if(peselTextField.getText().isEmpty() && nameTextField.getText().isEmpty() && surnameTextField.getText().isEmpty()){
-                this.readerObservableList.addAll(ReaderDAO.searchAllReaders());
+                readerObservableList.addAll(ReaderDAO.searchAllReaders());
             }
 
             else if(!peselTextField.getText().isEmpty()){
-                this.readerObservableList.addAll(ReaderDAO.searchReader(peselTextField.getText()));
+                readerObservableList.addAll(ReaderDAO.searchReader(peselTextField.getText()));
             }
 
             else if(peselTextField.getText().isEmpty()) {
-                this.readerObservableList.addAll(ReaderDAO.searchReaders(nameTextField.getText(), surnameTextField.getText()));
+                readerObservableList.addAll(ReaderDAO.searchReaders(nameTextField.getText(), surnameTextField.getText()));
             }
 
             tableView.setItems(readerObservableList);
@@ -125,11 +125,13 @@ public class BrowseReadersController implements SceneController{
                             selectedReader.getEmail(),
                             selectedReader.getBirthday());
             window.setScene(sceneStorage.get("readerInfo"));
+            window.centerOnScreen();
         }
     }
 
     public void handleBack(ActionEvent actionEvent) {
-        this.readerObservableList.clear();
+        readerObservableList.clear();
         window.setScene(sceneStorage.get("menu"));
+        window.centerOnScreen();
     }
 }

@@ -59,5 +59,7 @@ public class AddTitleController implements SceneController {
         yearTextField.clear();
 
         window.setScene(sceneStorage.get("menu"));
+        window.setTitle("Menu");
+        window.centerOnScreen();
     }
 }

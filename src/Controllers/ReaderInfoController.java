@@ -69,5 +69,6 @@ public class ReaderInfoController implements SceneController{
     public void handleBack(ActionEvent actionEvent) {
         readerInfoArray.clear();
         window.setScene(sceneStorage.get("browseReaders"));
+        window.centerOnScreen();
     }
 }

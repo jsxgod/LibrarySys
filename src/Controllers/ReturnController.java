@@ -41,7 +41,8 @@ public class ReturnController implements SceneController {
         TODO
         Actually perform the return action in the DB.
          */
-        this.bookIDTextField.clear();
-        this.window.setScene(sceneStorage.get("menu"));
+        bookIDTextField.clear();
+        window.setScene(sceneStorage.get("menu"));
+        window.centerOnScreen();
     }
 }

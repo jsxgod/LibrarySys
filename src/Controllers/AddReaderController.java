@@ -61,6 +61,7 @@ public class AddReaderController implements SceneController {
         surnameTextField.clear();
         emailTextField.clear();
 
-        this.window.setScene(sceneStorage.get("menu"));
+        window.setScene(sceneStorage.get("menu"));
+        window.centerOnScreen();
     }
 }
