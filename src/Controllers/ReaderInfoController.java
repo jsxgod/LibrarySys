@@ -27,13 +27,14 @@ public class ReaderInfoController implements SceneController{
     private String surname;
     private String email;
     private Date birthday;
+    private String status;
 
     private List<Object> readerInfoArray = new ArrayList<>();
 
     @Override
     public void setupController(Stage window) {
         this.window = window;
-        this.window.setTitle("User Info");
+        this.window.setTitle("Reader Info");
         this.parameterStorage = ParameterStorage.getInstance();
         this.sceneStorage = SceneStorage.getInstance();
     }
@@ -43,12 +44,13 @@ public class ReaderInfoController implements SceneController{
 
     }
 
-    public void getParams(String pesel, String name, String surname, String email, Date birthday){
+    public void getParams(String pesel, String name, String surname, String email, Date birthday, String status){
         this.pesel = pesel;
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.birthday = birthday;
+        this.status = status;
 
         /*
         TODO
@@ -60,6 +62,7 @@ public class ReaderInfoController implements SceneController{
         readerInfoArray.add(this.surname);
         readerInfoArray.add(this.email);
         readerInfoArray.add(this.birthday);
+        readerInfoArray.add(this.status);
 
         ObservableList<Object> observableArrayList = FXCollections.observableArrayList(readerInfoArray);
 

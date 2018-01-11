@@ -1,8 +1,8 @@
 package Model;
 
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import util.ReaderStatus;
 
 import java.sql.Date;
 
@@ -12,7 +12,8 @@ public class Reader {
     private final SimpleStringProperty name = new SimpleStringProperty("");
     private final SimpleStringProperty surname = new SimpleStringProperty("");
     private final SimpleStringProperty email = new SimpleStringProperty("");
-    private SimpleObjectProperty<Date> birthday = new SimpleObjectProperty<Date>();
+    private SimpleObjectProperty<Date> birthday = new SimpleObjectProperty<>();
+    private SimpleStringProperty status = new SimpleStringProperty(ReaderStatus.INACTIVE.toString());
 
     public Reader(){
         this("","", "","", new Date(1900,1,1));
@@ -48,9 +49,9 @@ public class Reader {
 
     public void setBirthday(Date birthday) { this.birthday.set(birthday); }
 
-    public String getPesel() {
-        return pesel.get();
-    }
+    public void setStatus(ReaderStatus status) { this.status.set(status.toString()); }
+
+    public String getPesel() { return pesel.get(); }
 
     public String getName() { return name.get(); }
 
@@ -59,6 +60,8 @@ public class Reader {
     public String getEmail() { return email.get(); }
 
     public Date getBirthday() { return birthday.get(); }
+
+    public String getStatus() { return status.get(); }
 
     public SimpleStringProperty readerPeselProperty() { return this.pesel; }
 

@@ -1,5 +1,6 @@
 package Controllers;
 
+import Model.DAO.ReaderDAO;
 import Storage.ParameterStorage;
 import Storage.SceneStorage;
 import javafx.event.ActionEvent;
@@ -9,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -49,12 +51,9 @@ public class AddReaderController implements SceneController {
 
     }
 
-    public void handleConfirm(ActionEvent actionEvent) {
-        /*
-        TODO
-        Add user to the DB
-        Alert if Reader added correctly
-         */
+    public void handleConfirm(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+
+        ReaderDAO.insertReader(peselTextField.getText(), nameTextField.getText(), surnameTextField.getText(), emailTextField.getText(), birthdayDatePicker.getValue().toString());
 
         peselTextField.clear();
         nameTextField.clear();
@@ -62,6 +61,14 @@ public class AddReaderController implements SceneController {
         emailTextField.clear();
 
         window.setScene(sceneStorage.get("menu"));
+        window.setTitle("Menu");
+        window.centerOnScreen();
+    }
+
+    @FXML
+    public void handleCancel(ActionEvent actionEvent) {
+        window.setScene(sceneStorage.get("menu"));
+        window.setTitle("Menu");
         window.centerOnScreen();
     }
 }

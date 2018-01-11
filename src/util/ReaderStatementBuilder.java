@@ -17,11 +17,9 @@ public class ReaderStatementBuilder implements SQLStatementBuilder {
 
     @Override
     public ReaderStatementBuilder insert(String table, List<String> values) {
-       statement += "BEGIN\n" +
-                "INSERT INTO readers\n" +
-                "VALUES('"+values.get(0)+"', '"+values.get(1)+"', '"+values.get(2)+"','"+values.get(3)+"', '"+ "STR_TO_DATE('"+values.get(4)+"', '%d-%m-%Y'));\n" +
-                "END;";
-
+       statement +=
+                "INSERT INTO readers(pesel, name, surname, email, birthday) VALUES('"+values.get(0)+"', '"+values.get(1)+"', '"+values.get(2)+"', '"+values.get(3)+"', '"+values.get(4)+"');";
+        System.out.println(statement);
         return this;
     }
 

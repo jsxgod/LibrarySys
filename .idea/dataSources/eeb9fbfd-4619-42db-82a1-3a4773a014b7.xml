@@ -1013,16 +1013,19 @@
     <column id="252" parent="232" name="bookID">
       <Position>2</Position>
       <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="253" parent="232" name="pesel">
       <Position>3</Position>
       <DataType>char(11)|0</DataType>
+      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="254" parent="232" name="start">
       <Position>4</Position>
       <DataType>date|0</DataType>
+      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="255" parent="232" name="stop">
@@ -1062,11 +1065,13 @@
     <column id="262" parent="233" name="name">
       <Position>2</Position>
       <DataType>varchar(32)|0</DataType>
+      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="263" parent="233" name="surname">
       <Position>3</Position>
       <DataType>varchar(32)|0</DataType>
+      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="264" parent="233" name="birthday">
@@ -1089,92 +1094,129 @@
       <ColNames>pesel</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="268" parent="234" name="pesel">
+    <trigger id="268" parent="233" name="checkEmployeesPESEL">
+      <Turn>before-row</Turn>
+      <Events>I</Events>
+    </trigger>
+    <column id="269" parent="234" name="pesel">
       <Position>1</Position>
       <DataType>char(11)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="269" parent="234" name="name">
+    <column id="270" parent="234" name="name">
       <Position>2</Position>
       <DataType>varchar(32)|0</DataType>
+      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="270" parent="234" name="surname">
+    <column id="271" parent="234" name="surname">
       <Position>3</Position>
       <DataType>varchar(32)|0</DataType>
+      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="271" parent="234" name="email">
+    <column id="272" parent="234" name="email">
       <Position>4</Position>
       <DataType>varchar(64)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="272" parent="234" name="birthday">
+    <column id="273" parent="234" name="birthday">
       <Position>5</Position>
       <DataType>date|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="273" parent="234" name="PRIMARY">
+    <column id="274" parent="234" name="isBlocked">
+      <Position>6</Position>
+      <DataType>tinyint(1)|0</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="275" parent="234" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>pesel</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="274" parent="235" name="isbn">
+    <trigger id="276" parent="234" name="checkReadersPESEL">
+      <Turn>before-row</Turn>
+      <Events>I</Events>
+    </trigger>
+    <column id="277" parent="235" name="isbn">
       <Position>1</Position>
       <DataType>varchar(13)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="275" parent="235" name="title">
+    <column id="278" parent="235" name="authorName">
       <Position>2</Position>
       <DataType>varchar(64)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="276" parent="235" name="publisher">
+    <column id="279" parent="235" name="title">
       <Position>3</Position>
       <DataType>varchar(64)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="277" parent="235" name="year">
-      <Position>4</Position>
-      <DataType>int(10) unsigned|0</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <key id="278" parent="235" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>isbn</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="279" parent="236" name="pesel">
-      <Position>1</Position>
-      <DataType>char(11)|0</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="280" parent="236" name="username">
-      <Position>2</Position>
-      <DataType>varchar(32)|0</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="281" parent="236" name="hash">
-      <Position>3</Position>
-      <DataType>char(64)|0</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="282" parent="236" name="salt">
+    <column id="280" parent="235" name="publisher">
       <Position>4</Position>
       <DataType>varchar(64)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="283" parent="236" name="perm">
+    <column id="281" parent="235" name="year">
       <Position>5</Position>
       <DataType>int(10) unsigned|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="284" parent="236" name="pesel">
+    <index id="282" parent="235" name="authorName">
+      <ColNames>authorName</ColNames>
+    </index>
+    <key id="283" parent="235" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>isbn</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="284" parent="235" name="titles_ibfk_1">
+      <ColNames>authorName</ColNames>
+      <RefSchemaName>library</RefSchemaName>
+      <RefTableName>authors</RefTableName>
+      <RefColNames>authorName</RefColNames>
+    </foreign-key>
+    <trigger id="285" parent="235" name="updateAuthor">
+      <Turn>before-row</Turn>
+      <Events>I</Events>
+    </trigger>
+    <column id="286" parent="236" name="pesel">
+      <Position>1</Position>
+      <DataType>char(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="287" parent="236" name="username">
+      <Position>2</Position>
+      <DataType>varchar(32)|0</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="288" parent="236" name="hash">
+      <Position>3</Position>
+      <DataType>char(64)|0</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="289" parent="236" name="salt">
+      <Position>4</Position>
+      <DataType>varchar(64)|0</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="290" parent="236" name="perm">
+      <Position>5</Position>
+      <DataType>int(10) unsigned|0</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="291" parent="236" name="pesel">
       <ColNames>pesel</ColNames>
     </index>
-    <foreign-key id="285" parent="236" name="users_ibfk_1">
+    <foreign-key id="292" parent="236" name="users_ibfk_1">
       <ColNames>pesel</ColNames>
       <RefSchemaName>library</RefSchemaName>
       <RefTableName>employees</RefTableName>

@@ -101,7 +101,9 @@ public class TitleDAO {
     }
 
     //Insert a Title
-    public static void insertTitle (String ISBN, String title, String author, String publisher, String year) throws SQLException, ClassNotFoundException {
+    public static void insertTitle (String ISBN, String author, String title, String publisher, String year, String numberOfCopies) throws SQLException, ClassNotFoundException {
+
+        int numOfCopies = Integer.parseInt(numberOfCopies);
 
         List<String> values = new ArrayList<>();
         values.add(ISBN);
@@ -110,7 +112,7 @@ public class TitleDAO {
         values.add(publisher);
         values.add(year);
 
-        String updateStatement = builder.insert("titles", values).build();
+        String updateStatement = builder.clear().insert("titles", values).build();
 
         //Execute update statement
         try {

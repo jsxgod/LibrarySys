@@ -38,5 +38,10 @@
         <TextField promptText="Year" prefWidth="100" fx:id="yearTextField" focusTraversable="false"/>
     </HBox>
 
-    <Button text="Confirm" onAction="#handleConfirm" translateX="150" translateY="380" defaultButton="true"/>
+    <HBox spacing="10" translateX="95" translateY="340">
+        <TextField promptText="Number of Copies" prefWidth="210" fx:id="numberOfCopiesTextField" focusTraversable="false"/>
+    </HBox>
+
+    <Button text="Confirm" onAction="#handleConfirm" translateX="140" translateY="380" defaultButton="true"/>
+    <Button text="Cancel" onAction="#handleCancel" translateX="210" translateY="380" defaultButton="true"/>
 </GridPane>

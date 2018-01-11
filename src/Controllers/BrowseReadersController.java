@@ -123,7 +123,8 @@ public class BrowseReadersController implements SceneController{
                             selectedReader.getName(),
                             selectedReader.getSurname(),
                             selectedReader.getEmail(),
-                            selectedReader.getBirthday());
+                            selectedReader.getBirthday(),
+                            selectedReader.getStatus());
             window.setScene(sceneStorage.get("readerInfo"));
             window.centerOnScreen();
         }

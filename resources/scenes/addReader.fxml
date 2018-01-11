@@ -38,5 +38,6 @@
         <DatePicker fx:id="birthdayDatePicker" focusTraversable="false"/>
     </HBox>
 
-    <Button text="Confirm" onAction="#handleConfirm" translateX="150" translateY="330" defaultButton="true"/>
+    <Button text="Confirm" onAction="#handleConfirm" translateX="125" translateY="330" defaultButton="true"/>
+    <Button text="Cancel" onAction="#handleCancel" translateX="225" translateY="330" defaultButton="true"/>
 </GridPane>
