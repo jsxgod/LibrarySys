@@ -58,6 +58,10 @@ public class MenuController implements SceneController {
     }
 
     public void handleLogOut(ActionEvent actionEvent) {
+        parameterStorage.remove("currentUser");
+        parameterStorage.remove("currentEmployee");
+        sceneStorage.remove("currentMenu");
+
         window.setScene(sceneStorage.get("login"));
         window.setTitle("Login");
         window.centerOnScreen();

@@ -89,7 +89,7 @@ public class AddEmployeeController implements SceneController{
             salaryTextField.clear();
             bankAccountTextField.clear();
 
-            window.setScene(sceneStorage.get("menuSupervisor"));
+            window.setScene(sceneStorage.get("currentMenu"));
             window.setTitle("Menu");
             window.centerOnScreen();
         }
@@ -104,7 +104,7 @@ public class AddEmployeeController implements SceneController{
 
     @FXML
     private void handleCancel(ActionEvent actionEvent) {
-        window.setScene(sceneStorage.get("menuSupervisor"));
+        window.setScene(sceneStorage.get("currentMenu"));
         window.setTitle("Menu");
         window.centerOnScreen();
     }

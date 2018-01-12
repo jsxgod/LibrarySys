@@ -50,6 +50,14 @@ public class SceneStorage implements Storage<Scene>, Watchable<Scene> {
     }
 
     /**
+     * Remove {@link Scene} object stored under the name {@code key}
+     * @param key key
+     */
+    public void remove(String key) {
+        scenes.remove(key);
+    }
+
+    /**
      * Register new watcher on {@code key}
      * @param key key
      * @param watcher watcher
@@ -72,4 +80,5 @@ public class SceneStorage implements Storage<Scene>, Watchable<Scene> {
             }
         }
     }
+
 }

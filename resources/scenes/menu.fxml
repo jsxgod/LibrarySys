@@ -12,7 +12,7 @@
     </padding>
 
     <VBox spacing="10">
-        <Label  translateX="125" style="-fx-font: NORMAL 20 Tahoma;" text="Menu"/>
+        <Label  translateX="115" style="-fx-font: NORMAL 20 Tahoma;" text="Menu"/>
         <Button prefWidth="270" text="Search Titles" onAction="#handleSearchTitles"/>
         <Button prefWidth="270" text="Browse Readers" onAction="#handleBrowseReaders"/>
         <Button prefWidth="270" text="Borrow a Book" onAction="#handleBorrow"/>

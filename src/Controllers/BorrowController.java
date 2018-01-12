@@ -70,7 +70,7 @@ public class BorrowController implements SceneController{
 
                 bookIDTextField.clear();
                 peselTextField.clear();
-                window.setScene(sceneStorage.get("menu"));
+                window.setScene(sceneStorage.get("currentMenu"));
                 window.setTitle("Menu");
                 window.centerOnScreen();
             }
@@ -84,7 +84,7 @@ public class BorrowController implements SceneController{
         bookIDTextField.clear();
         peselTextField.clear();
 
-        window.setScene(sceneStorage.get("menu"));
+        window.setScene(sceneStorage.get("currentMenu"));
         window.setTitle("Menu");
         window.centerOnScreen();
     }

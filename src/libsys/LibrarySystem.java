@@ -43,6 +43,9 @@ public class LibrarySystem extends Application {
         FXMLLoader menuSupervisorLoader = new FXMLLoader(getClass().getResource("/scenes/menuSupervisor.fxml"));
         FXMLLoader addEmployeeLoader = new FXMLLoader(getClass().getResource("/scenes/addEmployee.fxml"));
         FXMLLoader browseEmployeesLoader = new FXMLLoader(getClass().getResource("/scenes/browseEmployees.fxml"));
+        FXMLLoader employeeInfoLoader = new FXMLLoader(getClass().getResource("/scenes/employeeInfo.fxml"));
+        FXMLLoader menuAdministratorLoader = new FXMLLoader(getClass().getResource("/scenes/menuAdministrator.fxml"));
+        FXMLLoader backupLoader = new FXMLLoader(getClass().getResource("/scenes/backup.fxml"));
 
         Parent loginRoot = loginLoader.load();
         Parent searchTitleRoot = searchTitleLoader.load();
@@ -56,6 +59,9 @@ public class LibrarySystem extends Application {
         Parent menuSupervisorRoot = menuSupervisorLoader.load();
         Parent addEmployeeRoot = addEmployeeLoader.load();
         Parent browseEmployeesRoot = browseEmployeesLoader.load();
+        Parent employeeInfoRoot = employeeInfoLoader.load();
+        Parent menuAdministratorRoot = menuAdministratorLoader.load();
+        Parent backupRoot = backupLoader.load();
 
         Scene loginScene = new Scene(loginRoot);
         Scene searchTitleScene = new Scene(searchTitleRoot);
@@ -69,6 +75,9 @@ public class LibrarySystem extends Application {
         Scene menuSupervisorScene = new Scene(menuSupervisorRoot);
         Scene addEmployeeScene = new Scene(addEmployeeRoot);
         Scene browseEmployeesScene = new Scene(browseEmployeesRoot);
+        Scene employeeInfoScene = new Scene(employeeInfoRoot);
+        Scene menuAdministratorScene = new Scene(menuAdministratorRoot);
+        Scene backupScene = new Scene(backupRoot);
 
         sceneStorage.put("login", loginScene);
         sceneStorage.put("browseTitles", searchTitleScene);
@@ -82,6 +91,9 @@ public class LibrarySystem extends Application {
         sceneStorage.put("menuSupervisor", menuSupervisorScene);
         sceneStorage.put("addEmployee", addEmployeeScene);
         sceneStorage.put("browseEmployees", browseEmployeesScene);
+        sceneStorage.put("employeeInfo", employeeInfoScene);
+        sceneStorage.put("menuAdministrator", menuAdministratorScene);
+        sceneStorage.put("backup", backupScene);
 
         LoginController loginController = loginLoader.getController();
         BrowseTitlesController browseTitlesController = searchTitleLoader.getController();
@@ -95,8 +107,12 @@ public class LibrarySystem extends Application {
         MenuSupervisorController menuSupervisorController = menuSupervisorLoader.getController();
         AddEmployeeController addEmployeeController = addEmployeeLoader.getController();
         BrowseEmployeesController browseEmployeesController = browseEmployeesLoader.getController();
+        EmployeeInfoController employeeInfoController = employeeInfoLoader.getController();
+        MenuAdministratorController menuAdministratorController = menuAdministratorLoader.getController();
+        BackupController backupController = backupLoader.getController();
 
         controllerStorage.put("readerInfo", readerInfoController);
+        controllerStorage.put("employeeInfo", employeeInfoController);
 
         loginController.setupController(this.window);
         browseTitlesController.setupController(this.window);
@@ -110,8 +126,11 @@ public class LibrarySystem extends Application {
         menuSupervisorController.setupController(this.window);
         addEmployeeController.setupController(this.window);
         browseEmployeesController.setupController(this.window);
+        employeeInfoController.setupController(this.window);
+        menuAdministratorController.setupController(this.window);
+        backupController.setupController(this.window);
 
-        primaryStage.setScene(addEmployeeScene);
+        primaryStage.setScene(loginScene);
         primaryStage.setResizable(false);
         primaryStage.show();
     }

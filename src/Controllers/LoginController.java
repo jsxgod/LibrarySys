@@ -1,5 +1,6 @@
 package Controllers;
 
+import Model.DAO.EmployeeDAO;
 import Model.DAO.UserDAO;
 import Model.User;
 import Storage.ParameterStorage;
@@ -70,13 +71,15 @@ public class LoginController implements SceneController {
                 String salt = user.getSalt();
                 String hash = user.getHash();
                 if (pGenerator.hashFunction(password, salt).equals(hash)) {
+                    parameterStorage.put("currentEmployee", EmployeeDAO.searchEmployee(login));
+                    parameterStorage.put("currentUser", user);
+
                     loginAlert.setAlertType(Alert.AlertType.INFORMATION);
                     loginAlert.setTitle("Login Successfully");
                     loginAlert.setContentText("login as " + user.getPesel() + " with access level " + AccessLevel.values()[user.getAccessLevel()]);
                     loginAlert.showAndWait();
-                    window.setScene(sceneStorage.get("menu"));
-                    window.setTitle("Menu");
-                    window.centerOnScreen();
+
+                    changeScene(parameterStorage.get("currentUser"));
                 } else {
                     loginAlert.setAlertType(Alert.AlertType.ERROR);
                     loginAlert.setTitle("Login error");
@@ -94,6 +97,28 @@ public class LoginController implements SceneController {
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void changeScene(Object currentUser) {
+        switch(((User) currentUser).getAccessLevel()){
+            /*
+            0 - Administrator
+            1 - Supervisor
+            2 - Librarian
+             */
+            case 0:
+                sceneStorage.put("currentMenu", sceneStorage.get("menuAdministrator"));
+                window.setScene(sceneStorage.get("menuAdministrator"));
+                break;
+            case 1:
+                sceneStorage.put("currentMenu", sceneStorage.get("menuSupervisor"));
+                window.setScene(sceneStorage.get("menuSupervisor"));
+                break;
+            case 2:
+                sceneStorage.put("currentMenu", sceneStorage.get("menu"));
+                window.setScene(sceneStorage.get("menu"));
+                break;
         }
     }
 }

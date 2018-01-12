@@ -11,9 +11,9 @@ import java.util.ResourceBundle;
 
 public class MenuSupervisorController implements SceneController {
 
-    private Stage window;
-    private ParameterStorage parameterStorage;
-    private SceneStorage sceneStorage;
+    protected Stage window;
+    protected ParameterStorage parameterStorage;
+    protected SceneStorage sceneStorage;
 
     @Override
     public void setupController(Stage window) {
@@ -65,6 +65,10 @@ public class MenuSupervisorController implements SceneController {
 
     @FXML
     private void handleLogOut(ActionEvent actionEvent) {
+        parameterStorage.remove("currentUser");
+        parameterStorage.remove("currentEmployee");
+        sceneStorage.remove("currentMenu");
+
         window.setScene(sceneStorage.get("login"));
         window.setTitle("Login");
         window.centerOnScreen();

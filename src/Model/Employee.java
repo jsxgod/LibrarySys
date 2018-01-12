@@ -4,19 +4,28 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Employee {
-    private SimpleStringProperty name;
-    private SimpleStringProperty surname;
-    private SimpleIntegerProperty salary;
-    private SimpleStringProperty bankAccount;
+    private SimpleStringProperty pesel = new SimpleStringProperty();
+    private SimpleStringProperty name = new SimpleStringProperty();
+    private SimpleStringProperty surname = new SimpleStringProperty();
+    private SimpleStringProperty email = new SimpleStringProperty();
+    private SimpleIntegerProperty salary = new SimpleIntegerProperty();
+    private SimpleStringProperty bankAccount = new SimpleStringProperty();
 
-    public Employee(){ this("","",0,""); }
+    public Employee(){ this("","","",0,""); }
 
-    public Employee(String name, String surname, int salary, String bankAccount) {
+    public Employee(String name, String surname, String email, int salary, String bankAccount) {
         setName(name);
         setSurname(surname);
+        setEmail(email);
         setSalary(salary);
         setBankAccount(bankAccount);
     }
+
+    public String getPesel() { return pesel.get(); }
+
+    public SimpleStringProperty peselProperty() { return pesel; }
+
+    public void setPesel(String pesel) { this.pesel.set(pesel); }
 
     public String getName() { return name.get(); }
 
@@ -29,6 +38,12 @@ public class Employee {
     public SimpleStringProperty surnameProperty() { return surname; }
 
     public void setSurname(String surname) { this.surname.set(surname); }
+
+    public String getEmail() { return email.get(); }
+
+    public SimpleStringProperty emailProperty() { return email; }
+
+    public void setEmail(String email) { this.email.set(email); }
 
     public int getSalary() { return salary.get(); }
 

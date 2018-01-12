@@ -28,7 +28,7 @@ public class EmployeeDAO {
         }
     }
 
-    //SELECT All Users
+    //SELECT All Employees
     public static ObservableList<Employee> searchAllEmployees() throws SQLException, ClassNotFoundException {
 
         String selectStatement = "SELECT * FROM Employees;";
@@ -51,8 +51,10 @@ public class EmployeeDAO {
         while(resultSet.next()){
             Employee employee = new Employee();
 
+            employee.setPesel(resultSet.getString("pesel"));
             employee.setName(resultSet.getString("name"));
             employee.setSurname(resultSet.getString("surname"));
+            employee.setEmail(resultSet.getString("email"));
             employee.setSalary(resultSet.getInt("salary"));
             employee.setBankAccount(resultSet.getString("bankAccount"));
 

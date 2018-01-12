@@ -80,7 +80,7 @@ public class AddTitleController implements SceneController {
                 publisherTextField.clear();
                 yearTextField.clear();
 
-                window.setScene(sceneStorage.get("menu"));
+                window.setScene(sceneStorage.get("currentMenu"));
                 window.setTitle("Menu");
                 window.centerOnScreen();
             } else {
@@ -95,7 +95,7 @@ public class AddTitleController implements SceneController {
 
     @FXML
     private void handleCancel(ActionEvent actionEvent) {
-        window.setScene(sceneStorage.get("menu"));
+        window.setScene(sceneStorage.get("currentMenu"));
         window.setTitle("Menu");
         window.centerOnScreen();
     }

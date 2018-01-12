@@ -18,6 +18,6 @@
         <TextField promptText="BookID" prefWidth="100" fx:id="bookIDTextField" focusTraversable="false"/>
     </HBox>
 
-    <Button text="Return" onAction="#handleReturn" translateX="100" translateY="150" defaultButton="true"/>
-    <Button text="Cancel" onAction="#handleCancel" translateX="150" translateY="150"/>
+    <Button text="Return" onAction="#handleReturn" translateX="125" translateY="150"/>
+    <Button text="Cancel" onAction="#handleCancel" translateX="200" translateY="150"/>
 </GridPane>

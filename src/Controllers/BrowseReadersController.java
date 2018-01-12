@@ -39,7 +39,7 @@ public class BrowseReadersController implements SceneController{
     private TextField surnameTextField;
 
     @FXML
-    public TableView tableView;
+    public TableView<Reader> tableView;
 
     @FXML
     private TableColumn<Reader, String> peselColumn;
@@ -131,7 +131,7 @@ public class BrowseReadersController implements SceneController{
 
     public void handleBack(ActionEvent actionEvent) {
         readerObservableList.clear();
-        window.setScene(sceneStorage.get("menu"));
+        window.setScene(sceneStorage.get("currentMenu"));
         window.centerOnScreen();
     }
 }

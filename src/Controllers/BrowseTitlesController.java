@@ -117,7 +117,7 @@ public class BrowseTitlesController implements SceneController{
     @FXML
     public void handleBack(ActionEvent actionEvent) {
         titleObservableList.clear();
-        window.setScene(sceneStorage.get("menu"));
+        window.setScene(sceneStorage.get("currentMenu"));
         window.setTitle("Menu");
         window.centerOnScreen();
     }

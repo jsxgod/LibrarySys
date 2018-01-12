@@ -66,7 +66,7 @@ public class AddReaderController implements SceneController {
             surnameTextField.clear();
             emailTextField.clear();
 
-            window.setScene(sceneStorage.get("menu"));
+            window.setScene(sceneStorage.get("currentMenu"));
             window.setTitle("Menu");
             window.centerOnScreen();
         }
@@ -81,7 +81,7 @@ public class AddReaderController implements SceneController {
 
     @FXML
     public void handleCancel(ActionEvent actionEvent) {
-        window.setScene(sceneStorage.get("menu"));
+        window.setScene(sceneStorage.get("currentMenu"));
         window.setTitle("Menu");
         window.centerOnScreen();
     }

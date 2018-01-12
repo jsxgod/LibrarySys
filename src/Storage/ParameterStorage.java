@@ -45,8 +45,18 @@ public class ParameterStorage implements Storage<Object>, Watchable<Object> {
      * Note that this method also calls {@link #notifyWatchers(String, Object)}
      */
     public void put(String key, Object object) {
+        System.out.println("Putting " + key);
         parameters.put(key, object);
         notifyWatchers(key, object);
+    }
+
+    /**
+     * Remove the object under the name {@code key}
+     * @param key key
+     */
+    public void remove(String key) {
+        System.out.println("removing " + key);
+        parameters.remove(key);
     }
 
     /**
