@@ -1,6 +1,8 @@
 package Controllers;
 
+import Model.DAO.BookDAO;
 import Model.DAO.TitleDAO;
+import Storage.ControllerStorage;
 import Storage.ParameterStorage;
 import Storage.SceneStorage;
 import Model.Title;
@@ -22,6 +24,7 @@ public class BrowseTitlesController implements SceneController{
 
     private ParameterStorage parameterStorage;
     private SceneStorage sceneStorage;
+    private ControllerStorage controllerStorage;
     private Stage window;
 
     private ObservableList<Title> titleObservableList = FXCollections.observableArrayList();
@@ -67,6 +70,7 @@ public class BrowseTitlesController implements SceneController{
         this.window = window;
         this.parameterStorage = ParameterStorage.getInstance();
         this.sceneStorage = SceneStorage.getInstance();
+        this.controllerStorage = ControllerStorage.getInstance();
     }
 
     @Override
@@ -122,8 +126,17 @@ public class BrowseTitlesController implements SceneController{
         window.centerOnScreen();
     }
 
-    public void handleGetCopies(ActionEvent actionEvent) {
-        Title title = tableView.getSelectionModel().getSelectedItem();
-        System.out.println(title.getAuthor());
+    public void handleGetCopies(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        Title selectedTitle = tableView.getSelectionModel().getSelectedItem();
+        if(selectedTitle != null){
+            ( (TitleInfoController) controllerStorage.get("titleInfo") )
+                    .getParams(selectedTitle.getISBN(),
+                            selectedTitle.getAuthor(),
+                            selectedTitle.getTitle(),
+                            selectedTitle.getPublisher());
+            window.setScene(sceneStorage.get("titleInfo"));
+            window.setTitle("Title Info");
+            window.centerOnScreen();
+        }
     }
 }

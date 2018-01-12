@@ -46,6 +46,7 @@ public class LibrarySystem extends Application {
         FXMLLoader employeeInfoLoader = new FXMLLoader(getClass().getResource("/scenes/employeeInfo.fxml"));
         FXMLLoader menuAdministratorLoader = new FXMLLoader(getClass().getResource("/scenes/menuAdministrator.fxml"));
         FXMLLoader backupLoader = new FXMLLoader(getClass().getResource("/scenes/backup.fxml"));
+        FXMLLoader titleInfoLoader = new FXMLLoader(getClass().getResource("/scenes/titleInfo.fxml"));
 
         Parent loginRoot = loginLoader.load();
         Parent searchTitleRoot = searchTitleLoader.load();
@@ -62,6 +63,7 @@ public class LibrarySystem extends Application {
         Parent employeeInfoRoot = employeeInfoLoader.load();
         Parent menuAdministratorRoot = menuAdministratorLoader.load();
         Parent backupRoot = backupLoader.load();
+        Parent titleInfoRoot = titleInfoLoader.load();
 
         Scene loginScene = new Scene(loginRoot);
         Scene searchTitleScene = new Scene(searchTitleRoot);
@@ -78,6 +80,7 @@ public class LibrarySystem extends Application {
         Scene employeeInfoScene = new Scene(employeeInfoRoot);
         Scene menuAdministratorScene = new Scene(menuAdministratorRoot);
         Scene backupScene = new Scene(backupRoot);
+        Scene titleInfoScene = new Scene(titleInfoRoot);
 
         sceneStorage.put("login", loginScene);
         sceneStorage.put("browseTitles", searchTitleScene);
@@ -94,6 +97,7 @@ public class LibrarySystem extends Application {
         sceneStorage.put("employeeInfo", employeeInfoScene);
         sceneStorage.put("menuAdministrator", menuAdministratorScene);
         sceneStorage.put("backup", backupScene);
+        sceneStorage.put("titleInfo", titleInfoScene);
 
         LoginController loginController = loginLoader.getController();
         BrowseTitlesController browseTitlesController = searchTitleLoader.getController();
@@ -110,9 +114,11 @@ public class LibrarySystem extends Application {
         EmployeeInfoController employeeInfoController = employeeInfoLoader.getController();
         MenuAdministratorController menuAdministratorController = menuAdministratorLoader.getController();
         BackupController backupController = backupLoader.getController();
+        TitleInfoController titleInfoController = titleInfoLoader.getController();
 
         controllerStorage.put("readerInfo", readerInfoController);
         controllerStorage.put("employeeInfo", employeeInfoController);
+        controllerStorage.put("titleInfo", titleInfoController);
 
         loginController.setupController(this.window);
         browseTitlesController.setupController(this.window);
@@ -129,6 +135,7 @@ public class LibrarySystem extends Application {
         employeeInfoController.setupController(this.window);
         menuAdministratorController.setupController(this.window);
         backupController.setupController(this.window);
+        titleInfoController.setupController(this.window);
 
         primaryStage.setScene(loginScene);
         primaryStage.setResizable(false);

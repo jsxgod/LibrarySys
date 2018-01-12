@@ -5,6 +5,8 @@ import util.DBUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BookDAO {
 
@@ -76,6 +78,25 @@ public class BookDAO {
             System.out.println("Error occurred while lookig for a book(bookID:"+bookID+"): " + e);
             throw e;
         }
+    }
+
+    public static List<String> getIds(String isbn) throws SQLException, ClassNotFoundException {
+        String sqlStatement = "SELECT * FROM Books WHERE ISBN='"+isbn+"';";
+        List<String> bookIdList = new ArrayList<>();
+        try {
+            ResultSet resultSetBorrows = DBUtil.executeQuery(sqlStatement);
+            while(resultSetBorrows.next()){
+                bookIdList.add(String.valueOf(resultSetBorrows.getInt("bookID")));
+                System.out.println("got ID");
+            }
+
+            } catch (SQLException | ClassNotFoundException e){
+                e.printStackTrace();
+                System.out.println("Could not get the list of BookIDs of selected Title");
+                throw e;
+            }
+
+            return bookIdList;
     }
 }
 
