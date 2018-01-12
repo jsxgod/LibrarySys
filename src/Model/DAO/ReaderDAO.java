@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import util.DBUtil;
 import util.ReaderStatementBuilder;
+import util.ReaderStatus;
 import util.SQLStatementBuilder;
 
 import java.sql.ResultSet;
@@ -45,6 +46,7 @@ public class ReaderDAO {
             reader.setSurname(resultSet.getString("surname"));
             reader.setEmail(resultSet.getString("email"));
             reader.setBirthday(resultSet.getDate("birthday"));
+            reader.setStatus(resultSet.getString("status"));
         }
         return reader;
     }
@@ -143,5 +145,36 @@ public class ReaderDAO {
             return false;
         }
         return true;
+    }
+
+    public static void setInactive(String pesel) throws ClassNotFoundException {
+        String updateStatement = "UPDATE Readers SET status='INACTIVE'";
+
+        //Execute update statement
+        try {
+            DBUtil.executeUpdate(updateStatement);
+        } catch (SQLException e) {
+            System.out.print("Error occurred during UPDATE query: " + e);
+        }
+    }
+    public static void setActive(String pesel) throws ClassNotFoundException {
+        String updateStatement = "UPDATE Readers SET status='ACTIVE'";
+
+        //Execute update statement
+        try {
+            DBUtil.executeUpdate(updateStatement);
+        } catch (SQLException e) {
+            System.out.print("Error occurred during UPDATE query: " + e);
+        }
+    }
+    public static void setSuspended(String pesel) throws ClassNotFoundException {
+        String updateStatement = "UPDATE Readers SET status='SUSPENDED', isBlocked=true";
+
+        //Execute update statement
+        try {
+            DBUtil.executeUpdate(updateStatement);
+        } catch (SQLException e) {
+            System.out.print("Error occurred during UPDATE query: " + e);
+        }
     }
 }

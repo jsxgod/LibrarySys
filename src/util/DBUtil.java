@@ -112,4 +112,23 @@ public class DBUtil {
             disconnect();
         }
     }
+
+    public static void callProcedure(String sqlStatement) throws SQLException, ClassNotFoundException {
+        CallableStatement stmt = null;
+
+        try {
+            connect();
+            stmt = connection.prepareCall(sqlStatement);
+            stmt.execute();
+        } catch (SQLException e) {
+            System.out.println("Could not execute call: " + e);
+            throw e;
+        } finally {
+            if(stmt != null){
+                stmt.close();
+            }
+
+            disconnect();
+        }
+    }
 }

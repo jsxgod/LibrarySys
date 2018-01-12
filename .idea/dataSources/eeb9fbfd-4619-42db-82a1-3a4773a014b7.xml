@@ -998,6 +998,7 @@
     <column id="250" parent="231" name="status">
       <Position>3</Position>
       <DataType>enum(&apos;free&apos;, &apos;borrowed&apos;)|0</DataType>
+      <DefaultExpression>&apos;free&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
     <index id="251" parent="231" name="isbn">
@@ -1150,107 +1151,114 @@
       <DataType>date|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="280" parent="234" name="isBlocked">
+    <column id="280" parent="234" name="status">
       <Position>6</Position>
-      <DataType>tinyint(1)|0</DataType>
+      <DataType>enum(&apos;INACTIVE&apos;, &apos;ACTIVE&apos;, &apos;SUSPENDED&apos;)|0</DataType>
+      <DefaultExpression>&apos;INACTIVE&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="281" parent="234" name="PRIMARY">
+    <column id="281" parent="234" name="isBlocked">
+      <Position>7</Position>
+      <DataType>tinyint(1)|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="282" parent="234" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>pesel</ColNames>
       <Primary>1</Primary>
     </key>
-    <trigger id="282" parent="234" name="checkReadersPESEL">
+    <trigger id="283" parent="234" name="checkReadersPESEL">
       <Turn>before-row</Turn>
       <Events>I</Events>
     </trigger>
-    <trigger id="283" parent="234" name="setBirthdayReaders">
+    <trigger id="284" parent="234" name="setBirthdayReaders">
       <Turn>before-row</Turn>
       <Events>I</Events>
     </trigger>
-    <column id="284" parent="235" name="isbn">
+    <column id="285" parent="235" name="isbn">
       <Position>1</Position>
       <DataType>varchar(13)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="285" parent="235" name="authorName">
+    <column id="286" parent="235" name="authorName">
       <Position>2</Position>
       <DataType>varchar(64)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="286" parent="235" name="title">
+    <column id="287" parent="235" name="title">
       <Position>3</Position>
       <DataType>varchar(64)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="287" parent="235" name="publisher">
+    <column id="288" parent="235" name="publisher">
       <Position>4</Position>
       <DataType>varchar(64)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="288" parent="235" name="year">
+    <column id="289" parent="235" name="year">
       <Position>5</Position>
       <DataType>int(10) unsigned|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="289" parent="235" name="PRIMARY">
+    <key id="290" parent="235" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>isbn</ColNames>
       <Primary>1</Primary>
     </key>
-    <trigger id="290" parent="235" name="checkISBN">
+    <trigger id="291" parent="235" name="checkISBN">
       <Turn>before-row</Turn>
       <Events>I</Events>
     </trigger>
-    <trigger id="291" parent="235" name="updateAuthor">
+    <trigger id="292" parent="235" name="updateAuthor">
       <Turn>before-row</Turn>
       <Events>I</Events>
     </trigger>
-    <trigger id="292" parent="235" name="updateAuthorsTitles">
+    <trigger id="293" parent="235" name="updateAuthorsTitles">
       <Turn>after-row</Turn>
       <Events>I</Events>
     </trigger>
-    <column id="293" parent="236" name="pesel">
+    <column id="294" parent="236" name="pesel">
       <Position>1</Position>
       <DataType>char(11)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="294" parent="236" name="hash">
+    <column id="295" parent="236" name="hash">
       <Position>2</Position>
       <DataType>char(64)|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="295" parent="236" name="salt">
+    <column id="296" parent="236" name="salt">
       <Position>3</Position>
       <DataType>varchar(64)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="296" parent="236" name="perm">
+    <column id="297" parent="236" name="perm">
       <Position>4</Position>
       <DataType>int(10) unsigned|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="297" parent="236" name="pesel">
+    <index id="298" parent="236" name="pesel">
       <ColNames>pesel</ColNames>
     </index>
-    <foreign-key id="298" parent="236" name="users_ibfk_1">
+    <foreign-key id="299" parent="236" name="users_ibfk_1">
       <ColNames>pesel</ColNames>
       <RefSchemaName>library</RefSchemaName>
       <RefTableName>employees</RefTableName>
       <RefColNames>pesel</RefColNames>
     </foreign-key>
-    <argument id="299" parent="237">
+    <argument id="300" parent="237">
       <ArgumentDirection>R</ArgumentDirection>
       <DataType>date|0</DataType>
     </argument>
-    <argument id="300" parent="237" name="pesel">
+    <argument id="301" parent="237" name="pesel">
       <Position>1</Position>
       <DataType>char(11)|0</DataType>
     </argument>
-    <argument id="301" parent="238" name="startBudget">
+    <argument id="302" parent="238" name="startBudget">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
     </argument>

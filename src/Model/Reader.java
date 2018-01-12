@@ -41,7 +41,7 @@ public class Reader {
 
     public void setBirthday(Date birthday) { this.birthday.set(birthday); }
 
-    public void setStatus(ReaderStatus status) { this.status.set(status.toString()); }
+    public void setStatus(String status) { this.status.set(status); }
 
     public String getPesel() { return pesel.get(); }
 

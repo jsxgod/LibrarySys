@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import util.ReaderStatus;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -51,6 +52,7 @@ public class BorrowController implements SceneController{
         Book book = BookDAO.searchBook(bookIDTextField.getText());
         Title title = TitleDAO.searchTitle(book.getIsbn());
         String bookID = bookIDTextField.getText();
+        String status;
 
         try {
             if (BookDAO.isBorrowed(bookID)) {
@@ -60,13 +62,42 @@ public class BorrowController implements SceneController{
                 borrowAlert.setContentText(ReaderDAO.searchReader(BorrowDAO.getPesel(bookID)).getNameAndSurname() + " - " + BorrowDAO.getPesel(bookID));
                 borrowAlert.showAndWait();
             } else {
-                BorrowDAO.borrow(bookIDTextField.getText(), peselTextField.getText());
-                book.setReader(peselTextField.getText());
+                try{
+                    status = ReaderDAO.searchReader(peselTextField.getText()).getStatus();
+                } catch (NullPointerException e){
+                    status = "";
+                    borrowAlert.setAlertType(Alert.AlertType.WARNING);
+                    borrowAlert.setHeaderText("Failure");
+                    borrowAlert.setContentText("Given PESEL does not belong to a Reader.");
+                    borrowAlert.showAndWait();
+                }
+                switch (status){
+                    case "INACTIVE":
+                        ReaderDAO.setActive(peselTextField.getText());
+                        BorrowDAO.borrow(bookIDTextField.getText(), peselTextField.getText());
+                        book.setReader(peselTextField.getText());
 
-                borrowAlert.setAlertType(Alert.AlertType.INFORMATION);
-                borrowAlert.setTitle("Borrowed Successfully");
-                borrowAlert.setContentText("Borrowed " + title.getTitle() + " with ID: " + book.getId() + " to " + book.getReader());
-                borrowAlert.showAndWait();
+                        borrowAlert.setAlertType(Alert.AlertType.INFORMATION);
+                        borrowAlert.setTitle("Borrowed Successfully");
+                        borrowAlert.setContentText("Borrowed " + title.getTitle() + " with ID: " + book.getId() + " to " + book.getReader());
+                        borrowAlert.showAndWait();
+                        break;
+                    case "ACTIVE":
+                        BorrowDAO.borrow(bookIDTextField.getText(), peselTextField.getText());
+                        book.setReader(peselTextField.getText());
+
+                        borrowAlert.setAlertType(Alert.AlertType.INFORMATION);
+                        borrowAlert.setTitle("Borrowed Successfully");
+                        borrowAlert.setContentText("Borrowed " + title.getTitle() + " with ID: " + book.getId() + " to " + book.getReader());
+                        borrowAlert.showAndWait();
+                        break;
+                    case "SUSPENDED":
+                        borrowAlert.setAlertType(Alert.AlertType.WARNING);
+                        borrowAlert.setHeaderText("Failure");
+                        borrowAlert.setContentText("Given PESEL belongs to a SUSPENDED Reader.");
+                        borrowAlert.showAndWait();
+                }
+
 
                 bookIDTextField.clear();
                 peselTextField.clear();

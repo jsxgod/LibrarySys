@@ -8,7 +8,7 @@
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="Controllers.BrowseEmployeesController"
-          prefHeight="400.0" prefWidth="810.0">
+          prefHeight="400.0" prefWidth="595.0" minWidth="595.0">
 
     <padding>
         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -31,7 +31,9 @@
     </TableView>
 
     <HBox alignment="BOTTOM_CENTER" spacing="10" GridPane.rowIndex="2" GridPane.columnIndex="0">
-        <Button onAction="#handleSelect" prefWidth="100" text="SELECT"/>
-        <Button onAction="#handleBack" prefWidth="50" text="Back"/>
+        <Button onAction="#handleSelect" prefWidth="100" text="Select"/>
+        <Button onAction="#handlePaySalaries" prefWidth="100" text="Pay Salaries"/>
+        <TextField fx:id="budgetTextField" prefWidth="100" promptText="Budget"/>
+        <Button onAction="#handleBack" prefWidth="100" text="Back"/>
     </HBox>
 </GridPane>

@@ -91,4 +91,18 @@ public class EmployeeDAO {
         }
         return true;
     }
+
+    public static boolean paySalaries(String budget) throws ClassNotFoundException {
+        String sqlStatement = "CALL paySalary("+budget+");";
+
+        //Execute update statement
+        try {
+            DBUtil.callProcedure(sqlStatement);
+        } catch (SQLException e) {
+            System.out.print("Error occurred during Pay Salaries query: " + e);
+            return false;
+        }
+        return true;
+
+    }
 }

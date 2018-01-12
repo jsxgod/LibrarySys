@@ -57,12 +57,12 @@ public class BookDAO {
     }
 
     public static boolean isBorrowed(String bookID) throws SQLException, ClassNotFoundException {
-        String selectStatement = "SELECT * FROM Borrows WHERE bookID="+bookID+";";
+        String selectStatement = "SELECT * FROM Books WHERE bookID="+bookID+";";
         //Execute the statement
         try {
             ResultSet resultSetBorrows = DBUtil.executeQuery(selectStatement);
         if(resultSetBorrows.next()){
-            if( resultSetBorrows.getString("stop").isEmpty()){
+            if(resultSetBorrows.getString("status").equals("free")){
                 return false;
             }
             else {

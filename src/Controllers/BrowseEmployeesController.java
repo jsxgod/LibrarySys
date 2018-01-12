@@ -1,25 +1,22 @@
 package Controllers;
 
 import Model.DAO.EmployeeDAO;
-import Model.DAO.ReaderDAO;
 import Model.DAO.UserDAO;
 import Model.Employee;
 import Storage.ControllerStorage;
 import Storage.ParameterStorage;
 import Storage.SceneStorage;
-import Model.Reader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -33,16 +30,10 @@ public class BrowseEmployeesController implements SceneController{
     private ObservableList<Employee> employeeObservableList = FXCollections.observableArrayList();
 
     @FXML
-    private TextField peselTextField;
+    private TextField budgetTextField;
 
     @FXML
-    private TextField nameTextField;
-
-    @FXML
-    private TextField surnameTextField;
-
-    @FXML
-    public TableView<Employee> tableView;
+    private TableView<Employee> tableView;
 
     @FXML
     private TableColumn<Employee, String> nameColumn;
@@ -110,9 +101,35 @@ public class BrowseEmployeesController implements SceneController{
         }
     }
 
+    @FXML
+    private void handlePaySalaries(ActionEvent actionEvent) throws ClassNotFoundException {
+        Alert salaryAlert = new Alert(null);
+        if(EmployeeDAO.paySalaries(budgetTextField.getText())){
+            System.out.println("\nPaid");
+
+            salaryAlert.setAlertType(Alert.AlertType.INFORMATION);
+            salaryAlert.setTitle("Salaries Paid Successfully");
+            salaryAlert.setHeaderText("Success");
+            salaryAlert.setContentText("Salaries could be covered with given budget");
+            salaryAlert.showAndWait();
+        }
+        else {
+            System.out.println("\nNot Paid");
+
+            salaryAlert.setAlertType(Alert.AlertType.ERROR);
+            salaryAlert.setTitle("Paying Salaries Failed");
+            salaryAlert.setHeaderText("Failure");
+            salaryAlert.setContentText("Salaries could not be covered with given budget");
+            salaryAlert.showAndWait();
+        }
+    }
+
     public void handleBack(ActionEvent actionEvent) {
+        budgetTextField.clear();
+
         window.setScene(sceneStorage.get("currentMenu"));
         window.setTitle("Menu");
         window.centerOnScreen();
     }
+
 }

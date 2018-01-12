@@ -54,6 +54,7 @@ public class SceneStorage implements Storage<Scene>, Watchable<Scene> {
      * @param key key
      */
     public void remove(String key) {
+        System.out.println("removing " + key);
         scenes.remove(key);
     }
 
