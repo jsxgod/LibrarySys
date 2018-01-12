@@ -27,15 +27,7 @@ public class Reader {
         setBirthday(birthday);
     }
 
-    public void setPesel(String pesel) {
-        /*
-        TODO
-        VALIDATE PESEL (PeselValidator class?)
-        probably not needed because pesel will be validated on the DB side.
-         */
-
-        this.pesel.set(pesel);
-    }
+    public void setPesel(String pesel) { this.pesel.set(pesel); }
 
     public void setName(String name) {
         this.name.set(name);

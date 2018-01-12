@@ -40,6 +40,9 @@ public class LibrarySystem extends Application {
         FXMLLoader browseReadersLoader = new FXMLLoader(getClass().getResource("/scenes/browseReaders.fxml"));
         FXMLLoader addTitleLoader = new FXMLLoader(getClass().getResource("/scenes/addTitle.fxml"));
         FXMLLoader readerInfoLoader = new FXMLLoader(getClass().getResource("/scenes/readerInfo.fxml"));
+        FXMLLoader menuSupervisorLoader = new FXMLLoader(getClass().getResource("/scenes/menuSupervisor.fxml"));
+        FXMLLoader addEmployeeLoader = new FXMLLoader(getClass().getResource("/scenes/addEmployee.fxml"));
+        FXMLLoader browseEmployeesLoader = new FXMLLoader(getClass().getResource("/scenes/browseEmployees.fxml"));
 
         Parent loginRoot = loginLoader.load();
         Parent searchTitleRoot = searchTitleLoader.load();
@@ -50,6 +53,9 @@ public class LibrarySystem extends Application {
         Parent browseReadersRoot = browseReadersLoader.load();
         Parent addTitleRoot = addTitleLoader.load();
         Parent readerInfoRoot = readerInfoLoader.load();
+        Parent menuSupervisorRoot = menuSupervisorLoader.load();
+        Parent addEmployeeRoot = addEmployeeLoader.load();
+        Parent browseEmployeesRoot = browseEmployeesLoader.load();
 
         Scene loginScene = new Scene(loginRoot);
         Scene searchTitleScene = new Scene(searchTitleRoot);
@@ -60,6 +66,9 @@ public class LibrarySystem extends Application {
         Scene browseReadersScene = new Scene(browseReadersRoot);
         Scene addTitleScene = new Scene(addTitleRoot);
         Scene readerInfoScene = new Scene(readerInfoRoot);
+        Scene menuSupervisorScene = new Scene(menuSupervisorRoot);
+        Scene addEmployeeScene = new Scene(addEmployeeRoot);
+        Scene browseEmployeesScene = new Scene(browseEmployeesRoot);
 
         sceneStorage.put("login", loginScene);
         sceneStorage.put("browseTitles", searchTitleScene);
@@ -70,6 +79,9 @@ public class LibrarySystem extends Application {
         sceneStorage.put("browseReaders", browseReadersScene);
         sceneStorage.put("addTitle", addTitleScene);
         sceneStorage.put("readerInfo", readerInfoScene);
+        sceneStorage.put("menuSupervisor", menuSupervisorScene);
+        sceneStorage.put("addEmployee", addEmployeeScene);
+        sceneStorage.put("browseEmployees", browseEmployeesScene);
 
         LoginController loginController = loginLoader.getController();
         BrowseTitlesController browseTitlesController = searchTitleLoader.getController();
@@ -80,6 +92,9 @@ public class LibrarySystem extends Application {
         BrowseReadersController browseReadersController = browseReadersLoader.getController();
         AddTitleController addTitleController = addTitleLoader.getController();
         ReaderInfoController readerInfoController = readerInfoLoader.getController();
+        MenuSupervisorController menuSupervisorController = menuSupervisorLoader.getController();
+        AddEmployeeController addEmployeeController = addEmployeeLoader.getController();
+        BrowseEmployeesController browseEmployeesController = browseEmployeesLoader.getController();
 
         controllerStorage.put("readerInfo", readerInfoController);
 
@@ -92,8 +107,11 @@ public class LibrarySystem extends Application {
         browseReadersController.setupController(this.window);
         addTitleController.setupController(this.window);
         readerInfoController.setupController(this.window);
+        menuSupervisorController.setupController(this.window);
+        addEmployeeController.setupController(this.window);
+        browseEmployeesController.setupController(this.window);
 
-        primaryStage.setScene(loginScene);
+        primaryStage.setScene(menuSupervisorScene);
         primaryStage.setResizable(false);
         primaryStage.show();
     }
