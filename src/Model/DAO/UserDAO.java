@@ -52,7 +52,7 @@ public class UserDAO {
             User user = new User();
 
             user.setPesel(resultSet.getString("pesel"));
-            user.setUsername(resultSet.getString("username"));
+            //user.setUsername(resultSet.getString("username"));
             user.setHash(resultSet.getString("hash"));
             user.setSalt(resultSet.getString("salt"));
             user.setAccessLevel(resultSet.getInt("perm"));
@@ -70,7 +70,7 @@ public class UserDAO {
         if(resultSet.next()){
             user = new User();
             user.setPesel(resultSet.getString("pesel"));
-            user.setUsername(resultSet.getString("username"));
+            //user.setUsername(resultSet.getString("username"));
             user.setHash(resultSet.getString("hash"));
             user.setSalt(resultSet.getString("salt"));
             user.setAccessLevel(resultSet.getInt("perm"));

@@ -45,4 +45,11 @@ public class ReturnController implements SceneController {
         window.setScene(sceneStorage.get("menu"));
         window.centerOnScreen();
     }
+
+    public void handleCancel(ActionEvent actionEvent) {
+        bookIDTextField.clear();
+
+        window.setScene(sceneStorage.get("menu"));
+        window.centerOnScreen();
+    }
 }
