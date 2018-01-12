@@ -63,6 +63,8 @@ public class Reader {
 
     public String getStatus() { return status.get(); }
 
+    public String getNameAndSurname() { return name.get() + " " + surname.get(); }
+
     public SimpleStringProperty readerPeselProperty() { return this.pesel; }
 
     public SimpleStringProperty readerNameProperty() { return this.name; }

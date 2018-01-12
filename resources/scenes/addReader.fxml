@@ -33,11 +33,6 @@
         <TextField promptText="email" prefWidth="100" fx:id="emailTextField" focusTraversable="false"/>
     </HBox>
 
-    <HBox spacing="10" translateX="95" translateY="280">
-        <Label prefWidth="100" style="-fx-font: NORMAL 20 Tahoma;" text="Birthday"/>
-        <DatePicker fx:id="birthdayDatePicker" focusTraversable="false"/>
-    </HBox>
-
-    <Button text="Confirm" onAction="#handleConfirm" translateX="125" translateY="330" defaultButton="true"/>
-    <Button text="Cancel" onAction="#handleCancel" translateX="225" translateY="330" defaultButton="true"/>
+    <Button text="Confirm" onAction="#handleConfirm" translateX="125" translateY="280" defaultButton="true"/>
+    <Button text="Cancel" onAction="#handleCancel" translateX="225" translateY="280" defaultButton="true"/>
 </GridPane>

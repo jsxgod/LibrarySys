@@ -42,17 +42,17 @@ public class TitleStatementBuilder implements SQLStatementBuilder {
             if(firstWhere){
                 if(column.equals("year")){
                     int year = Integer.parseInt(value);
-                    statement += " WHERE "+column+"="+year;
+                    statement += " WHERE "+column+" LIKE "+year;
                     firstWhere = false;
                 } else {
-                    statement += " WHERE "+column+"='"+value+"'";
+                    statement += " WHERE "+column+" LIKE '%"+value+"%'";
                     firstWhere = false;
                 }
             } else {
                 if(column.equals("year")){
                     statement += " AND "+column+"="+value;
                     firstWhere = false;
-                } else { statement += " AND "+column+"='"+value+"'"; }
+                } else { statement += " AND "+column+" LIKE '%"+value+"%'"; }
             }
         }
 

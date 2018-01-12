@@ -101,7 +101,7 @@ public class TitleDAO {
     }
 
     //Insert a Title
-    public static void insertTitle (String ISBN, String author, String title, String publisher, String year, String numberOfCopies) throws SQLException, ClassNotFoundException {
+    public static boolean insertTitle (String ISBN, String author, String title, String publisher, String year, String numberOfCopies) throws SQLException, ClassNotFoundException {
 
         int numOfCopies = Integer.parseInt(numberOfCopies);
 
@@ -119,7 +119,9 @@ public class TitleDAO {
             DBUtil.executeUpdate(updateStatement);
         } catch (SQLException e) {
             System.out.print("Error occurred during INSERT query: " + e);
-            throw e;
+            return false;
         }
+
+        return true;
     }
 }

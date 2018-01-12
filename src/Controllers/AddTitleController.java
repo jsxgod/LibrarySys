@@ -1,10 +1,12 @@
 package Controllers;
 
+import Model.DAO.BookDAO;
 import Model.DAO.TitleDAO;
 import Storage.ParameterStorage;
 import Storage.SceneStorage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import util.DBUtil;
@@ -53,22 +55,42 @@ public class AddTitleController implements SceneController {
     }
 
     public void handleConfirm(ActionEvent actionEvent) throws SQLException, ClassNotFoundException{
-        /*
-        TODO
-        Add the Title to the DB with given number of books of that Title
-         */
 
-        TitleDAO.insertTitle(isbnTextField.getText(), authorTextField.getText(), titleTextField.getText(), publisherTextField.getText(), yearTextField.getText(), numberOfCopiesTextField.getText());
+        Alert addTitleAlert = new Alert(null);
+        int numberOfCopies = Integer.parseInt(numberOfCopiesTextField.getText());
 
-        isbnTextField.clear();
-        titleTextField.clear();
-        authorTextField.clear();
-        publisherTextField.clear();
-        yearTextField.clear();
+        if(numberOfCopiesTextField.getText().isEmpty() || numberOfCopiesTextField.getText().equals("0")){
+            addTitleAlert.setAlertType(Alert.AlertType.WARNING);
+            addTitleAlert.setTitle("Number of Books");
+            addTitleAlert.setContentText("Remember to input the number of books of given Title.");
+            addTitleAlert.showAndWait();
+        } else {
+            if (TitleDAO.insertTitle(isbnTextField.getText(), authorTextField.getText(), titleTextField.getText(), publisherTextField.getText(), yearTextField.getText(), numberOfCopiesTextField.getText())) {
+                addTitleAlert.setAlertType(Alert.AlertType.INFORMATION);
+                addTitleAlert.setTitle("Title Added");
+                addTitleAlert.setContentText("Successfully Added a new Title");
+                addTitleAlert.showAndWait();
 
-        window.setScene(sceneStorage.get("menu"));
-        window.setTitle("Menu");
-        window.centerOnScreen();
+                //Add the given number of copies to the Library.Books table
+                BookDAO.insertBook(isbnTextField.getText(), numberOfCopiesTextField.getText());
+
+                isbnTextField.clear();
+                titleTextField.clear();
+                authorTextField.clear();
+                publisherTextField.clear();
+                yearTextField.clear();
+
+                window.setScene(sceneStorage.get("menu"));
+                window.setTitle("Menu");
+                window.centerOnScreen();
+            } else {
+                addTitleAlert.setAlertType(Alert.AlertType.ERROR);
+                addTitleAlert.setTitle("Title Not Added");
+                addTitleAlert.setHeaderText("Error occurred during the operation.");
+                addTitleAlert.setContentText("Check if the data is correct and try again.");
+                addTitleAlert.showAndWait();
+            }
+        }
     }
 
     @FXML

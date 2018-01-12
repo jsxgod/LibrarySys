@@ -94,7 +94,6 @@ public class BrowseReadersController implements SceneController{
         readerObservableList.clear();
         try{
 
-
             if(peselTextField.getText().isEmpty() && nameTextField.getText().isEmpty() && surnameTextField.getText().isEmpty()){
                 readerObservableList.addAll(ReaderDAO.searchAllReaders());
             }

@@ -23,5 +23,6 @@
         <TextField promptText="Pesel" prefWidth="100" fx:id="peselTextField" focusTraversable="false"/>
     </HBox>
 
-    <Button text="Borrow" onAction="#handleBorrow" translateX="150" translateY="150" defaultButton="true"/>
+    <Button text="Borrow" onAction="#handleBorrow" translateX="100" translateY="150"/>
+    <Button text="Cancel" onAction="#handleCancel" translateX="150" translateY="150"/>
 </GridPane>

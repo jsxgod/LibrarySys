@@ -18,7 +18,7 @@ public class ReaderStatementBuilder implements SQLStatementBuilder {
     @Override
     public ReaderStatementBuilder insert(String table, List<String> values) {
        statement +=
-                "INSERT INTO readers(pesel, name, surname, email, birthday) VALUES('"+values.get(0)+"', '"+values.get(1)+"', '"+values.get(2)+"', '"+values.get(3)+"', '"+values.get(4)+"');";
+                "INSERT INTO readers(pesel, name, surname, email) VALUES('"+values.get(0)+"', '"+values.get(1)+"', '"+values.get(2)+"', '"+values.get(3)+"');";
         System.out.println(statement);
         return this;
     }
@@ -27,11 +27,11 @@ public class ReaderStatementBuilder implements SQLStatementBuilder {
     public ReaderStatementBuilder withWhere(String column, String value) {
         if(!value.equals(EMPTY_STRING)){
             if(firstWhere){
-                statement += " WHERE "+column+"='"+value+"'";
+                statement += " WHERE "+column+" LIKE '%"+value+"%'";
                 firstWhere = false;
             }
             else {
-                statement += " AND "+column+"='"+value+"'";
+                statement += " AND "+column+" LIKE '%"+value+"%'";
             }
         }
 

@@ -124,7 +124,7 @@ public class ReaderDAO {
     }
 
     //Insert a Reader
-    public static void insertReader (String pesel, String name, String surname, String email, String birthday) throws SQLException, ClassNotFoundException {
+    public static boolean insertReader (String pesel, String name, String surname, String email) throws SQLException, ClassNotFoundException {
         //Declare a DELETE statement
         /*
         TODO
@@ -137,7 +137,6 @@ public class ReaderDAO {
         values.add(name);
         values.add(surname);
         values.add(email);
-        values.add(birthday);
 
         updateStatement = builder.clear().insert("readers", values).build();
 
@@ -146,7 +145,8 @@ public class ReaderDAO {
             DBUtil.executeUpdate(updateStatement);
         } catch (SQLException e) {
             System.out.print("Error occurred during INSERT query: " + e);
-            throw e;
+            return false;
         }
+        return true;
     }
 }
