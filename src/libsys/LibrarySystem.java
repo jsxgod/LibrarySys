@@ -111,7 +111,7 @@ public class LibrarySystem extends Application {
         addEmployeeController.setupController(this.window);
         browseEmployeesController.setupController(this.window);
 
-        primaryStage.setScene(loginScene);
+        primaryStage.setScene(addEmployeeScene);
         primaryStage.setResizable(false);
         primaryStage.show();
     }

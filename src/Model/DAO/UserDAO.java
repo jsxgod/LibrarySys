@@ -77,4 +77,20 @@ public class UserDAO {
         }
         return user;
     }
+
+    public static boolean insertUser(String pesel, String hash, String salt, String perm) throws SQLException, ClassNotFoundException {
+
+        int accessLevel = Integer.parseInt(perm);
+
+        String updateStatement = "INSERT INTO Users(pesel,hash,salt,perm) VALUES ('"+pesel+"', '"+hash+"', '"+salt+"', "+accessLevel+");";
+
+        //Execute update statement
+        try {
+            DBUtil.executeUpdate(updateStatement);
+        } catch (SQLException e) {
+            System.out.print("Error occurred during INSERT query: " + e);
+            return false;
+        }
+        return true;
+    }
 }

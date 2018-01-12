@@ -125,11 +125,6 @@ public class ReaderDAO {
 
     //Insert a Reader
     public static boolean insertReader (String pesel, String name, String surname, String email) throws SQLException, ClassNotFoundException {
-        //Declare a DELETE statement
-        /*
-        TODO
-        Change updateStatement to match DB transaction
-         */
         String updateStatement = null;
 
         List<String> values = new ArrayList<>();

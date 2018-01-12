@@ -17,7 +17,7 @@ public class DBUtil {
     *   pattern: "jdbc:oracle:thin:Username/Password@IP:Port/SID";
     */
 
-    private static final String connectionString = "jdbc:mysql://localhost/Library?" + "user=root&password=mik";
+    private static final String connectionString = "jdbc:mysql://localhost/Library?" + "user=root&password=cat123";
 
     //Establish Connection
     public static void connect() throws SQLException, ClassNotFoundException {

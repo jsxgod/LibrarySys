@@ -7,6 +7,8 @@ import util.DBUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EmployeeDAO {
     //SELECT a User
@@ -73,5 +75,18 @@ public class EmployeeDAO {
             employee.setBankAccount(resultSet.getString("bankAccount"));
         }
         return employee;
+    }
+
+    public static boolean insertEmployee(String pesel, String name, String surname, String email, String salary, String bankAccount) throws SQLException, ClassNotFoundException {
+
+        String updateStatement = "INSERT INTO Employees(pesel,name,surname,email,salary,bankAccount) VALUES ('"+pesel+"', '"+name+"', '"+surname+"', '"+email+"', "+salary+", '"+bankAccount+"');";
+        //Execute update statement
+        try {
+            DBUtil.executeUpdate(updateStatement);
+        } catch (SQLException e) {
+            System.out.print("Error occurred during INSERT query: " + e);
+            return false;
+        }
+        return true;
     }
 }

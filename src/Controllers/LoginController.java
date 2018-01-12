@@ -11,6 +11,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import util.AccessLevel;
+import util.PasswordGenerator;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,8 +30,6 @@ public class LoginController implements SceneController {
     private String login;
     private String password;
 
-    private enum AccessLevel { ADMINISTRATOR, SUPERVISOR, LIBRARIAN}
-
     @FXML
     private TextField loginInput;
 
@@ -41,24 +41,6 @@ public class LoginController implements SceneController {
 
     public LoginController() throws IOException {
 
-    }
-
-    private String hashFunction(String password, String salt) {
-        try {
-            MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
-            String passWithSalt = password + salt;
-            byte[] passBytes = passWithSalt.getBytes();
-            byte[] passHash = sha256.digest(passBytes);
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < passHash.length; i++) {
-                sb.append(Integer.toString((passHash[i] & 0xff) + 0x100, 16).substring(1));
-            }
-            String generatedPassword = sb.toString();
-            return generatedPassword;
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     @Override
@@ -80,22 +62,25 @@ public class LoginController implements SceneController {
         this.login = loginInput.getText();
         this.password = passwordInput.getText();
 
+        PasswordGenerator pGenerator = new PasswordGenerator();
+
         try {
             User user = UserDAO.searchUser(login);
             if (user != null) {
                 String salt = user.getSalt();
                 String hash = user.getHash();
-                if (hashFunction(password, salt).equals(hash)) {
+                if (pGenerator.hashFunction(password, salt).equals(hash)) {
                     loginAlert.setAlertType(Alert.AlertType.INFORMATION);
                     loginAlert.setTitle("Login Successfully");
                     loginAlert.setContentText("login as " + user.getPesel() + " with access level " + AccessLevel.values()[user.getAccessLevel()]);
                     loginAlert.showAndWait();
                     window.setScene(sceneStorage.get("menu"));
+                    window.setTitle("Menu");
                     window.centerOnScreen();
                 } else {
                     loginAlert.setAlertType(Alert.AlertType.ERROR);
                     loginAlert.setTitle("Login error");
-                    loginAlert.setContentText("Incorrect password");
+                    loginAlert.setContentText("Incorrect Login and Password combination.");
                     loginAlert.showAndWait();
                 }
                 loginInput.clear();
@@ -104,7 +89,7 @@ public class LoginController implements SceneController {
             else{
                 loginAlert.setAlertType(Alert.AlertType.ERROR);
                 loginAlert.setTitle("Login error");
-                loginAlert.setContentText("User do not exists");
+                loginAlert.setContentText("User does not exists");
                 loginAlert.showAndWait();
             }
         } catch (SQLException | ClassNotFoundException e) {
