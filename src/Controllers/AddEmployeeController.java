@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import util.AccessLevel;
 import util.PasswordGenerator;
+import util.SaltGenerator;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -67,9 +68,9 @@ public class AddEmployeeController implements SceneController{
     private void handleConfirm(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         Alert addEmployeeAlert = new Alert(null);
 
-        Random randomGenerator = new Random();
+        SaltGenerator saltGenerator = new SaltGenerator(64);
         PasswordGenerator pGenerator = new PasswordGenerator();
-        String salt = String.valueOf(randomGenerator.nextInt());
+        String salt = saltGenerator.nextString();
         String hashedPassword = pGenerator.hashFunction(passwordTextField.getText(), salt);
         System.out.println(nameTextField.getText());
 
