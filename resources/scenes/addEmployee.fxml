@@ -35,7 +35,7 @@
 
     <HBox spacing="10" translateX="95" translateY="290">
         <Label prefWidth="100" style="-fx-font: NORMAL 20 Tahoma;" text="Password"/>
-        <TextField promptText="Password" prefWidth="100" fx:id="passwordTextField" focusTraversable="false"/>
+        <PasswordField promptText="Password" prefWidth="100" fx:id="passwordTextField" focusTraversable="false"/>
     </HBox>
 
     <HBox spacing="10" translateX="95" translateY="350">
