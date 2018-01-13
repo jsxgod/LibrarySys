@@ -1,6 +1,12 @@
 package util;
 
 import com.sun.rowset.CachedRowSetImpl;
+
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.sql.*;
 
 public class DBUtil {
@@ -130,5 +136,48 @@ public class DBUtil {
 
             disconnect();
         }
+    }
+
+    public static boolean backupDB(String dbName, String user, String ip, String port, String password){
+        String dumpCommand = "C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysqldump.exe --routines " + dbName + " -h" + ip + " -u " + user + " -p" + password;
+        Runtime runtime = Runtime.getRuntime();
+        File backup = new File(System.getProperty("user.home") + "/Desktop/dump.sql");
+        PrintStream printStream;
+        try{
+            Process child = runtime.exec(dumpCommand);
+            printStream = new PrintStream(backup);
+            InputStream in = child.getInputStream();
+            int ch;
+            while ((ch = in.read()) != -1) {
+                printStream.write(ch);
+                System.out.write(ch); //Check in console.
+            }
+
+            InputStream err = child.getErrorStream();
+            while ((ch = err.read()) != -1) {
+                System.out.write(ch);
+            }
+        }catch(Exception exc) {
+            exc.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+
+
+    public static boolean restoreDB(String dbName, String userName, String password, String path) throws IOException, InterruptedException {
+        String[] executeCmd = new String[]{"C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysql.exe", "--user=" + userName, "--password=" + password, dbName,"-e", " source "+path};
+        Process runtimeProcess;
+        try {
+            runtimeProcess = Runtime.getRuntime().exec(executeCmd);
+            int processComplete = runtimeProcess.waitFor();
+            if (processComplete == 0) {
+                System.out.println("Backup restored successfully");
+                return true;
+            } else { System.out.println("Could not restore the backup"); }
+        } catch (Exception ex) { ex.printStackTrace(); }
+
+        return false;
     }
 }
