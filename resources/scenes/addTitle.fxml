@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="Controllers.AddTitleController"
+          prefHeight="500.0" prefWidth="400.0">
+
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+
+    <HBox spacing="15" translateX="90" translateY="40">
+        <Label prefWidth="100" style="-fx-font: NORMAL 20 Tahoma;" text="ISBN"/>
+        <TextField promptText="ISBN" prefWidth="100" fx:id="isbnTextField" focusTraversable="false"/>
+    </HBox>
+
+    <HBox spacing="15" translateX="90" translateY="100">
+        <Label prefWidth="100" style="-fx-font: NORMAL 20 Tahoma;" text="Author"/>
+        <TextField promptText="Author" prefWidth="100" fx:id="authorTextField" focusTraversable="false"/>
+    </HBox>
+
+    <HBox spacing="15" translateX="90" translateY="160">
+        <Label prefWidth="100" style="-fx-font: NORMAL 20 Tahoma;" text="Title"/>
+        <TextField promptText="Title" prefWidth="100" fx:id="titleTextField" focusTraversable="false"/>
+    </HBox>
+
+    <HBox spacing="10" translateX="95" translateY="220">
+        <Label prefWidth="100" style="-fx-font: NORMAL 18 Tahoma;" text="Publisher"/>
+        <TextField promptText="Publisher" prefWidth="100" fx:id="publisherTextField" focusTraversable="false"/>
+    </HBox>
+
+    <HBox spacing="10" translateX="95" translateY="280">
+        <Label prefWidth="100" style="-fx-font: NORMAL 20 Tahoma;" text="Year"/>
+        <TextField promptText="Year" prefWidth="100" fx:id="yearTextField" focusTraversable="false"/>
+    </HBox>
+
+    <HBox spacing="10" translateX="95" translateY="340">
+        <TextField promptText="Number of Copies" prefWidth="210" fx:id="numberOfCopiesTextField" focusTraversable="false"/>
+    </HBox>
+
+    <Button text="Confirm" onAction="#handleConfirm" translateX="140" translateY="380" defaultButton="true"/>
+    <Button text="Cancel" onAction="#handleCancel" translateX="210" translateY="380" defaultButton="true"/>
+</GridPane>

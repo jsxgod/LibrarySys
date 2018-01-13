@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<GridPane prefHeight="400.0" prefWidth="290.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MenuAdministratorController">
+
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+
+    <VBox spacing="10">
+        <Label  translateX="115" style="-fx-font: NORMAL 20 Tahoma;" text="Menu"/>
+        <Button prefWidth="270" text="Search Titles" onAction="#handleSearchTitles"/>
+        <Button prefWidth="270" text="Browse Readers" onAction="#handleBrowseReaders"/>
+        <Button prefWidth="270" text="Browse Employees" onAction="#handleBrowseEmployees"/>
+        <Button prefWidth="270" text="Borrow a Book" onAction="#handleBorrow"/>
+        <Button prefWidth="270" text="Return a Book" onAction="#handleReturn"/>
+        <Button prefWidth="270" text="Add Title" onAction="#handleAddTitle"/>
+        <Button prefWidth="270" text="Add Reader" onAction="#handleAddReader"/>
+        <Button prefWidth="270" text="Add Employee" onAction="#handleAddEmployee"/>
+        <Button prefWidth="270" text="Backup" onAction="#handleBackup"/>
+        <Button prefWidth="270" text="Log Out" onAction="#handleLogOut"/>
+    </VBox>
+</GridPane>

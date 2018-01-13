@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.collections.FXCollections?>
+<?import Model.Title?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="Controllers.BrowseTitlesController"
+          prefHeight="400.0" prefWidth="800.0">
+
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+
+    <HBox spacing="10" GridPane.rowIndex="0" GridPane.columnIndex="0">
+        <TextField promptText="ISBN" fx:id="isbnTextField" prefWidth="100" focusTraversable="false"/>
+        <TextField promptText="Author" fx:id="authorTextField" prefWidth="150" focusTraversable="false"/>
+        <TextField promptText="Title" fx:id="titleTextField" prefWidth="165" focusTraversable="false"/>
+        <TextField promptText="Publisher" fx:id="publisherTextField" prefWidth="150" focusTraversable="false"/>
+        <TextField promptText="Year" fx:id="yearTextField" prefWidth="50" minWidth="50" maxWidth="50" focusTraversable="false"/>
+
+        <Button fx:id="searchButton" prefWidth="100" text="Search" onAction="#handleSearch" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+    </HBox>
+
+    <TableView fx:id="tableView" prefWidth="690" GridPane.rowIndex="1" GridPane.columnIndex="0">
+
+        <columns>
+            <TableColumn fx:id="isbnColumn" text="ISBN" prefWidth="105"/>
+            <TableColumn fx:id="authorColumn" text="Author" prefWidth="230"/>
+            <TableColumn fx:id="titleColumn" text="Title" prefWidth="230"/>
+            <TableColumn fx:id="publisherColumn" text="Publisher" prefWidth="150"/>
+            <TableColumn fx:id="yearColumn" text="Year" prefWidth="50" resizable="false"/>
+        </columns>
+
+        <sortOrder>
+            <fx:reference source="authorColumn"/>
+        </sortOrder>
+    </TableView>
+
+    <HBox alignment="BOTTOM_CENTER" spacing="10" GridPane.rowIndex="2" GridPane.columnIndex="0">
+        <Button onAction="#handleGetCopies" prefWidth="300" text="See copies of selected Title"/>
+        <Button onAction="#handleBack" prefWidth="50" text="Back"/>
+    </HBox>
+</GridPane>
