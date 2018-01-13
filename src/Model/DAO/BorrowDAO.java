@@ -23,10 +23,11 @@ public class BorrowDAO {
 
     public static void returnBook(String bookID) throws SQLException, ClassNotFoundException {
         String updateStatement = "UPDATE Books SET status='free' WHERE bookID="+bookID+"";
-
+        String updateStatement2 = "UPDATE Borrows SET realstop=CURDATE() WHERE bookID="+bookID+" AND realstop IS NULL";
         //Execute update statement
         try {
             DBUtil.executeUpdate(updateStatement);
+            DBUtil.executeUpdate(updateStatement2);
         } catch (SQLException e) {
             System.out.print("Error occurred during UPDATE query: " + e);
             throw e;

@@ -1,10 +1,10 @@
-USE Library;
+USE library;
 
-DROP DATABASE Library;
+DROP DATABASE library;
 
-CREATE DATABASE Library;
+CREATE DATABASE library;
+USE library;
 
-USE Library;
 SET NAMES 'utf8';
 SET CHARACTER SET 'utf8';
 
@@ -33,7 +33,8 @@ CREATE TABLE Readers (
   surname VARCHAR(32) NOT NULL,
   email VARCHAR(64),
   birthday DATE,
-  isBlocked BOOLEAN,
+  status ENUM ('INACTIVE','ACTIVE', 'SUSPENDED') DEFAULT 'INACTIVE',
+  isBlocked BOOLEAN DEFAULT FALSE,
   PRIMARY KEY(pesel)
 );
 
@@ -50,7 +51,7 @@ CREATE TABLE Books (
   bookID INT UNSIGNED AUTO_INCREMENT,
   isbn VARCHAR(13),
   PRIMARY KEY(bookID),
-  status ENUM ('free','borrowed'),
+  status ENUM ('free','borrowed') DEFAULT 'free',
   FOREIGN KEY(isbn) REFERENCES Titles(isbn)
 );
 
@@ -58,8 +59,9 @@ CREATE TABLE Borrows (
   borrowID INT UNSIGNED AUTO_INCREMENT,
   bookID INT UNSIGNED NOT NULL,
   pesel CHAR(11) NOT NULL,
-  start DATE NOT NULL,
+  start DATE,
   stop DATE,
+  realstop DATE,
   PRIMARY KEY(borrowID),
   FOREIGN KEY(pesel) REFERENCES Readers(pesel),
   FOREIGN KEY(bookID) REFERENCES Books(bookID)
@@ -113,58 +115,58 @@ DELIMITER ;
 DROP TRIGGER IF EXISTS checkReadersPESEL;
 DELIMITER $$
 CREATE TRIGGER checkReadersPESEL BEFORE INSERT ON Readers FOR EACH ROW
-     BEGIN
-          IF SUBSTR(NEW.PESEL,1,2) >99
-             OR SUBSTR(NEW.PESEL,1,2) < 30
-             OR SUBSTR(NEW.PESEL,3,2) < 1
-             OR SUBSTR(NEW.PESEL,3,2) > 12
-             OR SUBSTR(NEW.PESEL,5,2) < 1
-             OR SUBSTR(NEW.PESEL,5,2) > 31
-             OR CHAR_LENGTH(NEW.PESEL) <> 11
-             OR MOD(SUBSTR(NEW.PESEL,1,1)*9
-                + SUBSTR(NEW.PESEL,2,1)*7
-                + SUBSTR(NEW.PESEL,3,1)*3
-                + SUBSTR(NEW.PESEL,4,1)*1
-                + SUBSTR(NEW.PESEL,5,1)*9
-                + SUBSTR(NEW.PESEL,6,1)*7
-                + SUBSTR(NEW.PESEL,7,1)*3
-                + SUBSTR(NEW.PESEL,8,1)*1
-                + SUBSTR(NEW.PESEL,9,1)*9
-                + SUBSTR(NEW.PESEL,10,1)*7,10)
-                <> SUBSTR(NEW.PESEL,11,1)
-          THEN
-               SIGNAL SQLSTATE '45000';
-               SET NEW.PESEL = NULL;
-          END IF;
-     END;
+  BEGIN
+    IF SUBSTR(NEW.PESEL,1,2) >99
+       OR SUBSTR(NEW.PESEL,1,2) < 30
+       OR SUBSTR(NEW.PESEL,3,2) < 1
+       OR SUBSTR(NEW.PESEL,3,2) > 12
+       OR SUBSTR(NEW.PESEL,5,2) < 1
+       OR SUBSTR(NEW.PESEL,5,2) > 31
+       OR CHAR_LENGTH(NEW.PESEL) <> 11
+       OR MOD(SUBSTR(NEW.PESEL,1,1)*9
+              + SUBSTR(NEW.PESEL,2,1)*7
+              + SUBSTR(NEW.PESEL,3,1)*3
+              + SUBSTR(NEW.PESEL,4,1)*1
+              + SUBSTR(NEW.PESEL,5,1)*9
+              + SUBSTR(NEW.PESEL,6,1)*7
+              + SUBSTR(NEW.PESEL,7,1)*3
+              + SUBSTR(NEW.PESEL,8,1)*1
+              + SUBSTR(NEW.PESEL,9,1)*9
+              + SUBSTR(NEW.PESEL,10,1)*7,10)
+          <> SUBSTR(NEW.PESEL,11,1)
+    THEN
+      SIGNAL SQLSTATE '45000';
+      SET NEW.PESEL = NULL;
+    END IF;
+  END;
 DELIMITER ;
 
 DELIMITER $$
 CREATE TRIGGER checkEmployeePESEL BEFORE INSERT ON Employees FOR EACH ROW
-     BEGIN
-          IF SUBSTR(NEW.PESEL,1,2) >99
-             OR SUBSTR(NEW.PESEL,1,2) < 30
-             OR SUBSTR(NEW.PESEL,3,2) < 1
-             OR SUBSTR(NEW.PESEL,3,2) > 12
-             OR SUBSTR(NEW.PESEL,5,2) < 1
-             OR SUBSTR(NEW.PESEL,5,2) > 31
-             OR CHAR_LENGTH(NEW.PESEL) <> 11
-             OR MOD(SUBSTR(NEW.PESEL,1,1)*9
-                + SUBSTR(NEW.PESEL,2,1)*7
-                + SUBSTR(NEW.PESEL,3,1)*3
-                + SUBSTR(NEW.PESEL,4,1)*1
-                + SUBSTR(NEW.PESEL,5,1)*9
-                + SUBSTR(NEW.PESEL,6,1)*7
-                + SUBSTR(NEW.PESEL,7,1)*3
-                + SUBSTR(NEW.PESEL,8,1)*1
-                + SUBSTR(NEW.PESEL,9,1)*9
-                + SUBSTR(NEW.PESEL,10,1)*7,10)
-                <> SUBSTR(NEW.PESEL,11,1)
-          THEN
-               SIGNAL SQLSTATE '45000';
-               SET NEW.PESEL = NULL;
-          END IF;
-     END;
+  BEGIN
+    IF SUBSTR(NEW.PESEL,1,2) >99
+       OR SUBSTR(NEW.PESEL,1,2) < 30
+       OR SUBSTR(NEW.PESEL,3,2) < 1
+       OR SUBSTR(NEW.PESEL,3,2) > 12
+       OR SUBSTR(NEW.PESEL,5,2) < 1
+       OR SUBSTR(NEW.PESEL,5,2) > 31
+       OR CHAR_LENGTH(NEW.PESEL) <> 11
+       OR MOD(SUBSTR(NEW.PESEL,1,1)*9
+              + SUBSTR(NEW.PESEL,2,1)*7
+              + SUBSTR(NEW.PESEL,3,1)*3
+              + SUBSTR(NEW.PESEL,4,1)*1
+              + SUBSTR(NEW.PESEL,5,1)*9
+              + SUBSTR(NEW.PESEL,6,1)*7
+              + SUBSTR(NEW.PESEL,7,1)*3
+              + SUBSTR(NEW.PESEL,8,1)*1
+              + SUBSTR(NEW.PESEL,9,1)*9
+              + SUBSTR(NEW.PESEL,10,1)*7,10)
+          <> SUBSTR(NEW.PESEL,11,1)
+    THEN
+      SIGNAL SQLSTATE '45000';
+      SET NEW.PESEL = NULL;
+    END IF;
+  END;
 DELIMITER ;
 
 DELIMITER $$
@@ -194,11 +196,11 @@ DELIMITER $$
 CREATE FUNCTION generateBirthdayFromPesel(pesel CHAR(11)) RETURNS DATE
   BEGIN
     RETURN(
-     SELECT
-       DATE_ADD(DATE_ADD(
-                MAKEDATE(1900+SUBSTR(pesel,1,2)*1, 1),
-                INTERVAL (SUBSTR(pesel,3,2))-1 MONTH),
-                INTERVAL (SUBSTR(pesel,5,2))-1 DAY)
+      SELECT
+        DATE_ADD(DATE_ADD(
+                     MAKEDATE(1900+SUBSTR(pesel,1,2)*1, 1),
+                     INTERVAL (SUBSTR(pesel,3,2))-1 MONTH),
+                 INTERVAL (SUBSTR(pesel,5,2))-1 DAY)
     );
   END $$
 DELIMITER ;
@@ -217,9 +219,10 @@ CREATE PROCEDURE paySalary(IN startBudget INT)
     SET tBudget = startBudget;
     SET isEnd = FALSE;
 
-    CREATE TEMPORARY TABLE tmp ( fBankAccount VARCHAR(34) ,fSalary INT );
+    CREATE TABLE IF NOT EXISTS salaryLog ( fBankAccount VARCHAR(34) ,fSalary INT );
 
     START TRANSACTION;
+    DELETE FROM salaryLog WHERE 1=1;
     OPEN kursor;
     petla: LOOP
       FETCH kursor INTO tBankAccount, tSalary;
@@ -227,18 +230,52 @@ CREATE PROCEDURE paySalary(IN startBudget INT)
       SET tBudget = tBudget - tSalary;
 
       IF (tBudget < 0) THEN
-        DROP TABLE tmp;
+        DROP TABLE salaryLog;
         ROLLBACK;
         LEAVE petla;
       END IF;
-      INSERT INTO tmp VALUES (tBankAccount,tSalary);
+      INSERT INTO salaryLog VALUES (tBankAccount,tSalary);
     END LOOP;
     CLOSE kursor;
     COMMIT;
-    SELECT * FROM tmp;
-    DROP TABLE tmp;
+    SELECT * FROM salaryLog;
+    DROP VIEW IF EXISTS lastSalaryView;
+    CREATE VIEW lastSalaryView AS SELECT * FROM salaryLog;
   END $$
 DELIMITER ;
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS checkBorrows;
+CREATE PROCEDURE checkBorrows()
+  BEGIN
+    DECLARE isEnd BOOL;
+    DECLARE tPesel VARCHAR(11);
+    DECLARE tstop DATE;
+    DECLARE trealstop DATE;
+    DECLARE kursor CURSOR FOR (SELECT pesel, stop, realstop FROM Borrows);
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET isEnd = TRUE;
+
+    SET isEnd = FALSE;
+
+    START TRANSACTION;
+    OPEN kursor;
+    petla: LOOP
+      FETCH kursor INTO tPesel, tstop, trealstop;
+      IF (isEnd) THEN LEAVE petla; END IF;
+      IF (tstop<CURDATE() AND trealstop IS NULL) THEN UPDATE Readers SET status='SUSPENDED' WHERE pesel = tPesel; END IF;
+    END LOOP;
+    CLOSE kursor;
+  END $$
+DELIMITER ;
+
+
+CREATE EVENT checkSchedule
+  ON SCHEDULE
+    EVERY 1 DAY
+    STARTS '2018-01-13 00:00:00' ON COMPLETION PRESERVE ENABLE
+DO
+  CALL checkBorrows();
+
 
 
 INSERT INTO Titles (isbn, authorName, title, publisher, year) VALUES ('9788324589463', 'Agata Christie', 'I nie było już nikogo', 'Dolnośląskie', '2010');
@@ -271,58 +308,58 @@ INSERT INTO Titles (isbn, authorName, title, publisher, year) VALUES ('978837517
 INSERT INTO Titles (isbn, authorName, title, publisher, year) VALUES ('9788379859603', 'Margaret Mitchell', 'Przeminęło z wiatrem. Tom 1', 'Albatros', '2017');
 INSERT INTO Titles (isbn, authorName, title, publisher, year) VALUES ('9788364488924', 'Paulo Coelho', 'Alchemik ', 'Drzewo Babel', '2015');
 
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('89021101455', 'Wojciech', 'Wodo', 'wojciech.wodo@drop.database', '1989-02-11');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('46040138259', 'Halina', 'Laskowska', 'halina.laskowska@gazeta.pl', '1946-04-01');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('41081949813', 'Filip', 'Gajda', 'filip.gajda@gmail.com', '1941-08-19');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('90111974545', 'Angelika', 'Maciejewska', 'angelika.maciejewska@poczta.onet.pl', '1990-11-19');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('85102898696', 'Renata', 'Piotrowska', 'renata.piotrowska@interia.fm', '1985-10-28');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('50092116695', 'Konrad', 'Wójtowicz', 'konrad.wojtowicz@poczta.onet.pl', '1950-09-21');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('51092375471', 'Krystyna', 'Kaźmierczak', 'krystyna.kazmierczak@gmail.com', '1951-09-23');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('90081072919', 'Kacper', 'Rogowski', 'kacper.rogowski@wp.pl', '1990-08-10');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('55020769138', 'Bożena', 'Tomczyk', 'bozena.tomczyk@gmail.com', '1955-02-07');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('69032031879', 'Marta', 'Sikora', 'marta.sikora@o2.pl', '1969-03-20');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('94070924399', 'Kajetan', 'Michalski', 'kajetan.michalski@gmail.com', '1994-07-09');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('91041441354', 'Dagmara', 'Brzozowska', 'dagmara.brzozowska@gmail.com', '1991-04-14');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('63071321672', 'Irmina', 'Michalak', 'irmina.michalak@wp.pl', '1963-07-13');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('93010331301', 'Albert', 'Wilczyński', 'albert.wilczynski@o2.pl', '1993-01-03');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('46101272939', 'Barbara', 'Mazurek', 'barbara.mazurek@interia.fm', '1946-10-12');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('71080273242', 'Adrian', 'Zieliński', 'adrian.zielinski@gmail.com', '1971-08-02');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('99031475512', 'Marta', 'Kowal', 'marta.kowal@gmail.com', '1999-03-14');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('44110751690', 'Halina', 'Kowalczyk', 'halina.kowalczyk@interia.fm', '1944-11-07');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('53120927656', 'Regina', 'Majchrzak', 'regina.majchrzak@gmail.com', '1953-12-09');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('53021752065', 'Apolonia', 'Górska', 'apolonia.gorska@gmail.com', '1953-02-17');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('65060820977', 'Olga', 'Olejniczak', 'olga.olejniczak@o2.pl', '1965-06-08');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('77070173833', 'Lucjan', 'Jóźwiak', 'lucjan.jozwiak@gmail.com', '1977-07-01');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('94102633929', 'Adrian', 'Majewski', 'adrian.majewski@gmail.com', '1994-10-26');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('81080829411', 'Stefania', 'Markiewicz', 'stefania.markiewicz@gmail.com', '1981-08-08');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('74010316255', 'Kamila', 'Mazur', 'kamila.mazur@gazeta.pl', '1974-01-03');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('82090488609', 'Anzelm', 'Woźniak', 'anzelm.wozniak@gmail.com', '1982-09-04');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('75031811796', 'Mateusz', 'Nawrocki', 'mateusz.nawrocki@gmail.com', '1975-03-18');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('50011895096', 'Juliusz', 'Sobolewski', 'juliusz.sobolewski@gmail.com', '1950-01-18');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('64080804819', 'Dionizy', 'Laskowski', 'dionizy.laskowski@interia.fm', '1964-08-08');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('61061069652', 'Żaneta', 'Majchrzak', 'zaneta.majchrzak@wp.pl', '1961-06-10');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('79122896794', 'Wiktor', 'Żak', 'wiktor.zak@interia.fm', '1979-12-28');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('58072828150', 'Leopold', 'Szymański', 'leopold.szymanski@gmail.com', '1958-07-28');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('46072263435', 'Gwidon', 'Bielecki', 'gwidon.bielecki@gmail.com', '1946-07-22');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('59080344010', 'Maja', 'Czerwińska', 'maja.czerwinska@o2.pl', '1959-08-03');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('58061526805', 'Apolonia', 'Wawrzyniak', 'apolonia.wawrzyniak@interia.fm', '1958-06-15');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('81101893571', 'Olgierd', 'Błaszczyk', 'olgierd.blaszczyk@gmail.com', '1981-10-18');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('79112635561', 'Aureliusz', 'Chmielewski', 'aureliusz.chmielewski@gmail.com', '1979-11-26');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('77030848490', 'Ireneusz', 'Krupa', 'ireneusz.krupa@interia.fm', '1977-03-08');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('48041397475', 'Konrad', 'Gajda', 'konrad.gajda@poczta.onet.pl', '1948-04-13');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('92110841411', 'Stefan', 'Mróz', 'stefan.mroz@wp.pl', '1992-11-08');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('64011647478', 'Wit', 'Kozak', 'wit.kozak@gmail.com', '1964-01-16');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('61062507380', 'Adolf', 'Karpiński', 'adolf.karpinski@o2.pl', '1961-06-25');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('46080693374', 'Ewa', 'Zielińska', 'ewa.zielinska@gmail.com', '1946-08-06');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('64020621478', 'Ernest', 'Zieliński', 'ernest.zielinski@gmail.com', '1964-02-06');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('63101764992', 'Krystian', 'Bednarczyk', 'krystian.bednarczyk@gmail.com', '1963-10-17');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('99031865715', 'Klaudia', 'Marciniak', 'klaudia.marciniak@poczta.onet.pl', '1999-03-18');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('80071964799', 'Dariusz', 'Krupa', 'dariusz.krupa@gmail.com', '1980-07-19');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('59091274128', 'Alicja', 'Urbaniak', 'alicja.urbaniak@gmail.com', '1959-09-12');
-INSERT INTO Readers (pesel, name, surname, email, birthday) VALUES ('70040530155', 'Ludmiła', 'Bednarek', 'ludmila.bednarek@interia.fm', '1970-04-05');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('89021101455', 'Wojciech', 'Wodo', 'wojciech.wodo@drop.database', '1989-02-11','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('46040138259', 'Halina', 'Laskowska', 'halina.laskowska@gazeta.pl', '1946-04-01','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('41081949813', 'Filip', 'Gajda', 'filip.gajda@gmail.com', '1941-08-19','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('90111974545', 'Angelika', 'Maciejewska', 'angelika.maciejewska@poczta.onet.pl', '1990-11-19','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('85102898696', 'Renata', 'Piotrowska', 'renata.piotrowska@interia.fm', '1985-10-28','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('50092116695', 'Konrad', 'Wójtowicz', 'konrad.wojtowicz@poczta.onet.pl', '1950-09-21','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('51092375471', 'Krystyna', 'Kaźmierczak', 'krystyna.kazmierczak@gmail.com', '1951-09-23','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('90081072919', 'Kacper', 'Rogowski', 'kacper.rogowski@wp.pl', '1990-08-10','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('55020769138', 'Bożena', 'Tomczyk', 'bozena.tomczyk@gmail.com', '1955-02-07','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('69032031879', 'Marta', 'Sikora', 'marta.sikora@o2.pl', '1969-03-20','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('94070924399', 'Kajetan', 'Michalski', 'kajetan.michalski@gmail.com', '1994-07-09','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('91041441354', 'Dagmara', 'Brzozowska', 'dagmara.brzozowska@gmail.com', '1991-04-14','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('63071321672', 'Irmina', 'Michalak', 'irmina.michalak@wp.pl', '1963-07-13','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('93010331301', 'Albert', 'Wilczyński', 'albert.wilczynski@o2.pl', '1993-01-03','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('46101272939', 'Barbara', 'Mazurek', 'barbara.mazurek@interia.fm', '1946-10-12','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('71080273242', 'Adrian', 'Zieliński', 'adrian.zielinski@gmail.com', '1971-08-02','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('99031475512', 'Marta', 'Kowal', 'marta.kowal@gmail.com', '1999-03-14','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('44110751690', 'Halina', 'Kowalczyk', 'halina.kowalczyk@interia.fm', '1944-11-07','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('53120927656', 'Regina', 'Majchrzak', 'regina.majchrzak@gmail.com', '1953-12-09','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('53021752065', 'Apolonia', 'Górska', 'apolonia.gorska@gmail.com', '1953-02-17','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('65060820977', 'Olga', 'Olejniczak', 'olga.olejniczak@o2.pl', '1965-06-08','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('77070173833', 'Lucjan', 'Jóźwiak', 'lucjan.jozwiak@gmail.com', '1977-07-01','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('94102633929', 'Adrian', 'Majewski', 'adrian.majewski@gmail.com', '1994-10-26','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('81080829411', 'Stefania', 'Markiewicz', 'stefania.markiewicz@gmail.com', '1981-08-08','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('74010316255', 'Kamila', 'Mazur', 'kamila.mazur@gazeta.pl', '1974-01-03','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('82090488609', 'Anzelm', 'Woźniak', 'anzelm.wozniak@gmail.com', '1982-09-04','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('75031811796', 'Mateusz', 'Nawrocki', 'mateusz.nawrocki@gmail.com', '1975-03-18','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('50011895096', 'Juliusz', 'Sobolewski', 'juliusz.sobolewski@gmail.com', '1950-01-18','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('64080804819', 'Dionizy', 'Laskowski', 'dionizy.laskowski@interia.fm', '1964-08-08','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('61061069652', 'Żaneta', 'Majchrzak', 'zaneta.majchrzak@wp.pl', '1961-06-10','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('79122896794', 'Wiktor', 'Żak', 'wiktor.zak@interia.fm', '1979-12-28','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('58072828150', 'Leopold', 'Szymański', 'leopold.szymanski@gmail.com', '1958-07-28','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('46072263435', 'Gwidon', 'Bielecki', 'gwidon.bielecki@gmail.com', '1946-07-22','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('59080344010', 'Maja', 'Czerwińska', 'maja.czerwinska@o2.pl', '1959-08-03','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('58061526805', 'Apolonia', 'Wawrzyniak', 'apolonia.wawrzyniak@interia.fm', '1958-06-15','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('81101893571', 'Olgierd', 'Błaszczyk', 'olgierd.blaszczyk@gmail.com', '1981-10-18','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('79112635561', 'Aureliusz', 'Chmielewski', 'aureliusz.chmielewski@gmail.com', '1979-11-26','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('77030848490', 'Ireneusz', 'Krupa', 'ireneusz.krupa@interia.fm', '1977-03-08','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('48041397475', 'Konrad', 'Gajda', 'konrad.gajda@poczta.onet.pl', '1948-04-13','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('92110841411', 'Stefan', 'Mróz', 'stefan.mroz@wp.pl', '1992-11-08','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('64011647478', 'Wit', 'Kozak', 'wit.kozak@gmail.com', '1964-01-16','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('61062507380', 'Adolf', 'Karpiński', 'adolf.karpinski@o2.pl', '1961-06-25','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('46080693374', 'Ewa', 'Zielińska', 'ewa.zielinska@gmail.com', '1946-08-06','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('64020621478', 'Ernest', 'Zieliński', 'ernest.zielinski@gmail.com', '1964-02-06','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('63101764992', 'Krystian', 'Bednarczyk', 'krystian.bednarczyk@gmail.com', '1963-10-17','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('99031865715', 'Klaudia', 'Marciniak', 'klaudia.marciniak@poczta.onet.pl', '1999-03-18','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('80071964799', 'Dariusz', 'Krupa', 'dariusz.krupa@gmail.com', '1980-07-19','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('59091274128', 'Alicja', 'Urbaniak', 'alicja.urbaniak@gmail.com', '1959-09-12','active');
+INSERT INTO Readers (pesel, name, surname, email, birthday, status) VALUES ('70040530155', 'Ludmiła', 'Bednarek', 'ludmila.bednarek@interia.fm', '1970-04-05','active');
 
 
-INSERT INTO Employees (pesel, name, surname, email, birthday, salary, bankAccount) VALUES ('97101612726', 'Aneta', 'Kurek', 'aneta.kurek@gmail.com', '1997-10-16', 2613, '48 2044 8749 0902 3682 2562 8066');
+INSERT INTO Employees (pesel, name, surname, email, birthday, salary, bankAccount) VALUES ('98112233449', 'Adam', 'Kowalski', 'adam.kowalski@gmail.com', '1998-11-22', 2613, '48 2044 8749 0902 3682 2562 8066');
 INSERT INTO Employees (pesel, name, surname, email, birthday, salary, bankAccount) VALUES ('51082146614', 'Katarzyna', 'Wójcik', 'katarzyna.wojcik@gmail.com', '1951-08-21', 3809, '80 6159 9326 4561 7271 9400 3366');
 INSERT INTO Employees (pesel, name, surname, email, birthday, salary, bankAccount) VALUES ('58090958297', 'Krystian', 'Wróblewski', 'krystian.wroblewski@poczta.onet.pl', '1958-09-09', 4888, '62 9918 6891 5235 3976 1159 7129');
 INSERT INTO Employees (pesel, name, surname, email, birthday, salary, bankAccount) VALUES ('93071141510', 'Kacper', 'Urban', 'kacper.urban@gmail.com', '1993-07-11', 4429, '51 0119 4081 4342 4063 4574 6566');
@@ -343,26 +380,53 @@ INSERT INTO Employees (pesel, name, surname, email, birthday, salary, bankAccoun
 INSERT INTO Employees (pesel, name, surname, email, birthday, salary, bankAccount) VALUES ('82111232318', 'Eliza', 'Jabłońska', 'eliza.jablonska@gmail.com', '1982-11-12', 4071, '28 8102 6336 0905 0401 3561 0957');
 INSERT INTO Employees (pesel, name, surname, email, birthday, salary, bankAccount) VALUES ('70022615379', 'Mariusz', 'Czech', 'mariusz.czech@gazeta.pl', '1970-02-26', 2805, '88 3280 3293 1294 7931 3542 0249');
 
-INSERT INTO Users (pesel, hash, salt, perm) VALUES ('97101612726', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '0');
-INSERT INTO Users (pesel, hash, salt, perm) VALUES ('51082146614', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '0');
-INSERT INTO Users (pesel, hash, salt, perm) VALUES ('58090958297', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '0');
-INSERT INTO Users (pesel, hash, salt, perm) VALUES ('93071141510', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '0');
-INSERT INTO Users (pesel, hash, salt, perm) VALUES ('59071397696', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '0');
-INSERT INTO Users (pesel, hash, salt, perm) VALUES ('76021738378', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '0');
-INSERT INTO Users (pesel, hash, salt, perm) VALUES ('71032665518', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '0');
-INSERT INTO Users (pesel, hash, salt, perm) VALUES ('88011363994', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '0');
-INSERT INTO Users (pesel, hash, salt, perm) VALUES ('75020696517', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '0');
-INSERT INTO Users (pesel, hash, salt, perm) VALUES ('96022103041', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '0');
-INSERT INTO Users (pesel, hash, salt, perm) VALUES ('76122604493', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '0');
-INSERT INTO Users (pesel, hash, salt, perm) VALUES ('49012763213', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '0');
-INSERT INTO Users (pesel, hash, salt, perm) VALUES ('50041759810', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '0');
-INSERT INTO Users (pesel, hash, salt, perm) VALUES ('81031660490', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '0');
-INSERT INTO Users (pesel, hash, salt, perm) VALUES ('42072212394', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '0');
-INSERT INTO Users (pesel, hash, salt, perm) VALUES ('89090610498', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '0');
-INSERT INTO Users (pesel, hash, salt, perm) VALUES ('86042891895', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '0');
-INSERT INTO Users (pesel, hash, salt, perm) VALUES ('52011660214', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '0');
-INSERT INTO Users (pesel, hash, salt, perm) VALUES ('82111232318', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '0');
-INSERT INTO Users (pesel, hash, salt, perm) VALUES ('70022615379', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '0');
+INSERT INTO Users (pesel, hash, salt, perm) VALUES ('98112233449', 'ef6a799fba8edee39e664a583d58fb97ba226496e962b4042e996a211d335213', 'hxOKcKJoI3oHC7BXt0wLLVKKuLYauIDocwvzZqItK7jMR1oEJNqTMuCdvn4OXYln', '0');
+INSERT INTO Users (pesel, hash, salt, perm) VALUES ('51082146614', '6a88554e5366e8bb7449243d0819f1ab9caeeb3f8e75341df8b1d81d96ab09a0', 'Ut3A1NHcZvxtzacm8Y1lI4ouTnP9OuKXD474q4m18t0238vb0ogcRL4mXQybMeIH', '1');
+INSERT INTO Users (pesel, hash, salt, perm) VALUES ('58090958297', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '2');
+INSERT INTO Users (pesel, hash, salt, perm) VALUES ('93071141510', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '2');
+INSERT INTO Users (pesel, hash, salt, perm) VALUES ('59071397696', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '2');
+INSERT INTO Users (pesel, hash, salt, perm) VALUES ('76021738378', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '2');
+INSERT INTO Users (pesel, hash, salt, perm) VALUES ('71032665518', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '2');
+INSERT INTO Users (pesel, hash, salt, perm) VALUES ('88011363994', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '2');
+INSERT INTO Users (pesel, hash, salt, perm) VALUES ('75020696517', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '2');
+INSERT INTO Users (pesel, hash, salt, perm) VALUES ('96022103041', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '2');
+INSERT INTO Users (pesel, hash, salt, perm) VALUES ('76122604493', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '2');
+INSERT INTO Users (pesel, hash, salt, perm) VALUES ('49012763213', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '2');
+INSERT INTO Users (pesel, hash, salt, perm) VALUES ('50041759810', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '2');
+INSERT INTO Users (pesel, hash, salt, perm) VALUES ('81031660490', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '2');
+INSERT INTO Users (pesel, hash, salt, perm) VALUES ('42072212394', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '2');
+INSERT INTO Users (pesel, hash, salt, perm) VALUES ('89090610498', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '2');
+INSERT INTO Users (pesel, hash, salt, perm) VALUES ('86042891895', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '2');
+INSERT INTO Users (pesel, hash, salt, perm) VALUES ('52011660214', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '2');
+INSERT INTO Users (pesel, hash, salt, perm) VALUES ('82111232318', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '2');
+INSERT INTO Users (pesel, hash, salt, perm) VALUES ('70022615379', '3a2d1585deedc84033fbe696819061083cc652129ff383f251816ebfbd7f9b13', 'gXJJUvvIKxrb3pPxUxsR1N4W1ROd9bQP', '2');
 
-
-
+INSERT INTO Books (isbn, status) VALUES ('9788324589463', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788375780673', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788375780659', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788375780642', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788375780635', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788375780697', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788375780598', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788375781557', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788375780680', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788375175851', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788379930012', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788372781758', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788328324800', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788328334793', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788374959056', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788380082175', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788380082236', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788380082113', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788380082137', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788380082212', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788380082151', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788380082199', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788377856802', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788377856819', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788377856826', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788371251114', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788375174830', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788379859603', 'free' );
+INSERT INTO Books (isbn, status) VALUES ('9788364488924', 'free' );
